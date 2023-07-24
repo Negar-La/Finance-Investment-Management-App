@@ -11,6 +11,7 @@ public interface TransactionDao {
     void updateTransaction(Transaction transaction);
     void deleteTransactionById(int id);
 
+
     List<Transaction> getTransactionsByPortfolioId(int portfolioId);
     List<Transaction> getTransactionsByUserId(int userId);
 }

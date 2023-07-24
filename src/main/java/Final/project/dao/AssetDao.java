@@ -11,6 +11,7 @@ public interface AssetDao {
     void updateAsset(Asset asset);
     void deleteAssetById(int id);
 
+
     List<Asset> getAssetsByPortfolioId(int portfolioId);
 
     List<Asset> getAssetsByUserId(int userId);
