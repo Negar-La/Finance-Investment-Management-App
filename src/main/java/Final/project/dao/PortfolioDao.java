@@ -1,5 +1,6 @@
 package Final.project.dao;
 
+import Final.project.entities.Asset;
 import Final.project.entities.Portfolio;
 
 import java.util.List;
@@ -12,4 +13,5 @@ public interface PortfolioDao {
     void deletePortfolioById(int id);
 
     List<Portfolio> getPortfoliosByUserId(int userId);
+    List<Asset> getAssetsForPortfolio(int portfolioId); // New method to get assets for a portfolio
 }

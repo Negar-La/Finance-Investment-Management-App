@@ -50,4 +50,13 @@ public class Asset {
         result = 31 * result + assetType.hashCode();
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Asset{" +
+                "assetID=" + assetID +
+                ", assetName='" + assetName + '\'' +
+                ", assetType='" + assetType + '\'' +
+                '}';
+    }
 }
