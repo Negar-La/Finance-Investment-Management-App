@@ -5,11 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-
+@Repository
 public class AssetDaoDB implements AssetDao{
     @Autowired
     private JdbcTemplate jdbc;
@@ -75,7 +76,7 @@ public class AssetDaoDB implements AssetDao{
 
     @Override
     public List<Asset> getAssetsByUserId(int userId) {
-        final String SELECT_ASSETS_BY_USER_ID = "SELECT a.* FROM Asset a " +
+        final String SELECT_ASSETS_BY_USER_ID = "SELECT a.* , pa.Quantity FROM Asset a " +
                 "JOIN Portfolio_Asset pa ON a.AssetID = pa.AssetID " +
                 "JOIN Portfolio p ON pa.PortfolioID = p.PortfolioID " +
                 "JOIN Account ac ON p.AccountID = ac.AccountID " +

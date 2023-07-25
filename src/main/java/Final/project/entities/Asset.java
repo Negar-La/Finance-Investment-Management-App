@@ -35,11 +35,11 @@ public class Asset {
         this.assetType = assetType;
     }
 
-    public BigDecimal getQuantiy() {
+    public BigDecimal getQuantity() {
         return quantity;
     }
 
-    public void setQuantiy(BigDecimal quantiy) {
+    public void setQuantity(BigDecimal quantiy) {
         this.quantity = quantiy;
     }
 

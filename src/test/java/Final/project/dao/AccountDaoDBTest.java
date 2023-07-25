@@ -161,35 +161,72 @@ class AccountDaoDBTest {
     public void testGetAllAccounts() {
         // Create a test user
         testUser = new User();
-        testUser.setFirstName("John");
-        testUser.setLastName("Doe");
-        testUser.setEmail("john@example.com");
+        testUser.setFirstName("Sara");
+        testUser.setLastName("Faith");
+        testUser.setEmail("sara@example.com");
         testUser.setPhone("111-111-2233");
         testUser = userDao.addUser(testUser);
 
-        // Create test accounts
+        // Create test accounts associated with the test user
         testAccounts = new ArrayList<>();
+
+        // Account 1
         Account account1 = new Account();
         account1.setAccountName("Savings Account");
         account1.setAccountType("Savings");
         account1.setUserID(testUser.getUserID());
+        account1 = accountDao.addAccount(account1);
         testAccounts.add(account1);
-        accountDao.addAccount(account1);
 
+        // Create portfolios for Account 1
+        List<Portfolio> portfoliosForAccount1 = new ArrayList<>();
+        Portfolio portfolio1ForAccount1 = new Portfolio();
+        portfolio1ForAccount1.setPortfolioName("Portfolio 1 for Account 1");
+        portfolio1ForAccount1.setAccountID(account1.getAccountID());
+        portfolio1ForAccount1 = portfolioDao.addPortfolio(portfolio1ForAccount1);
+        portfoliosForAccount1.add(portfolio1ForAccount1);
+
+        Portfolio portfolio2ForAccount1 = new Portfolio();
+        portfolio2ForAccount1.setPortfolioName("Portfolio 2 for Account 1");
+        portfolio2ForAccount1.setAccountID(account1.getAccountID());
+        portfolio2ForAccount1 = portfolioDao.addPortfolio(portfolio2ForAccount1);
+        portfoliosForAccount1.add(portfolio2ForAccount1);
+
+        account1.setPortfolios(portfoliosForAccount1);
+
+        // Account 2
         Account account2 = new Account();
         account2.setAccountName("Investment Account");
         account2.setAccountType("Investment");
         account2.setUserID(testUser.getUserID());
+        account2 = accountDao.addAccount(account2);
+
+        // Create portfolios for Account 2
+        List<Portfolio> portfoliosForAccount2 = new ArrayList<>();
+        Portfolio portfolio1ForAccount2 = new Portfolio();
+        portfolio1ForAccount2.setPortfolioName("Portfolio 1 for Account 2");
+        portfolio1ForAccount2.setAccountID(account2.getAccountID());
+        portfolio1ForAccount2 = portfolioDao.addPortfolio(portfolio1ForAccount2);
+        portfoliosForAccount2.add(portfolio1ForAccount2);
+
+        Portfolio portfolio2ForAccount2 = new Portfolio();
+        portfolio2ForAccount2.setPortfolioName("Portfolio 2 for Account 2");
+        portfolio2ForAccount2.setAccountID(account2.getAccountID());
+        portfolio2ForAccount2 = portfolioDao.addPortfolio(portfolio2ForAccount2);
+        portfoliosForAccount2.add(portfolio2ForAccount2);
+
+        account2.setPortfolios(portfoliosForAccount2);
         testAccounts.add(account2);
-        accountDao.addAccount(account2);
 
-        // Retrieve all accounts from the database
+        // Retrieve all accounts and compare the list size
         List<Account> retrievedAccounts = accountDao.getAllAccounts();
-
-        // Check if the retrieved accounts are not null and match the test accounts
-        assertNotNull(retrievedAccounts);
         assertEquals(testAccounts.size(), retrievedAccounts.size());
-        assertTrue(retrievedAccounts.containsAll(testAccounts));
+
+        // Verify if each test account is present in the retrieved accounts list
+        for (Account testAccount : testAccounts) {
+            assertTrue(retrievedAccounts.contains(testAccount));
+        }
+
     }
 
     @Test

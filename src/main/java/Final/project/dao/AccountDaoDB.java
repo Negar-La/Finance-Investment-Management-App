@@ -119,6 +119,11 @@ public class AccountDaoDB implements AccountDao{
 
     @Override
     public void deleteAccountById(int id) {
+        // Delete account's portfolios from the Portfolio_Asset table first
+        final String DELETE_ACCOUNT_PORTFOLIOS_ASSETS = "DELETE PA.* FROM Portfolio_Asset PA " +
+                "JOIN Portfolio P ON PA.PortfolioID = P.PortfolioID WHERE P.AccountID = ?";
+        jdbc.update(DELETE_ACCOUNT_PORTFOLIOS_ASSETS, id);
+
         // Delete account's portfolios from the Portfolio table first
         final String DELETE_ACCOUNT_PORTFOLIOS = "DELETE FROM Portfolio WHERE AccountID = ?";
         jdbc.update(DELETE_ACCOUNT_PORTFOLIOS, id);
