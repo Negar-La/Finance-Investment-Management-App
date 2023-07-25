@@ -42,7 +42,14 @@ public class AccountDaoDB implements AccountDao{
     // Helper method to get portfolios for an account
     private List<Portfolio> getPortfoliosForAccount(int accountId) {
         final String SELECT_PORTFOLIOS_FOR_ACCOUNT = "SELECT * FROM Portfolio WHERE AccountID = ?";
-        return jdbc.query(SELECT_PORTFOLIOS_FOR_ACCOUNT, new PortfolioDaoDB.PortfolioMapper(), accountId);
+        List<Portfolio> portfolios = new ArrayList<>();
+        try{
+            portfolios = jdbc.query(SELECT_PORTFOLIOS_FOR_ACCOUNT, new PortfolioDaoDB.PortfolioMapper(), accountId);
+        }catch (DataAccessException ex) {
+            // Handle the exception appropriately or log it
+            ex.printStackTrace();
+        }
+      return portfolios.isEmpty() ? null : portfolios;
     }
 
     @Override
