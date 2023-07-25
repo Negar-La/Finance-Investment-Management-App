@@ -1,11 +1,14 @@
 package Final.project.entities;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Portfolio {
     private int portfolioID;
     private String portfolioName;
     //private int accountID; // Foreign key to associate the portfolio with the account
+
+    private int accountID; // Foreign key to associate the portfolio with the account
     private List<Asset> assets;
 
     // Constructors, getters, setters, and other methods
@@ -27,6 +30,14 @@ public class Portfolio {
         this.portfolioName = portfolioName;
     }
 
+    public int getAccountID() {
+        return accountID;
+    }
+
+    public void setAccountID(int accountID) {
+        this.accountID = accountID;
+    }
+
     public List<Asset> getAssets() {
         return assets;
     }
@@ -43,16 +54,27 @@ public class Portfolio {
         Portfolio portfolio = (Portfolio) o;
 
         if (portfolioID != portfolio.portfolioID) return false;
+        if (accountID != portfolio.accountID) return false;
         if (!portfolioName.equals(portfolio.portfolioName)) return false;
-        return assets.equals(portfolio.assets);
+        return Objects.equals(assets, portfolio.assets);
     }
 
     @Override
     public int hashCode() {
         int result = portfolioID;
         result = 31 * result + portfolioName.hashCode();
-        result = 31 * result + assets.hashCode();
+        result = 31 * result + accountID;
+        result = 31 * result + (assets != null ? assets.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Portfolio{" +
+                "portfolioID=" + portfolioID +
+                ", portfolioName='" + portfolioName + '\'' +
+                ", assets=" + assets +
+                '}';
     }
 }
 

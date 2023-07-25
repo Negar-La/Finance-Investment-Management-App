@@ -19,12 +19,16 @@ public class UserDaoDB implements UserDao{
     @Autowired
     JdbcTemplate jdbc;
 
+    @Autowired
+    AccountDao accountDao;
     @Override
     public User getUserById(int id) {
         try {
             final String SELECT_USER_BY_ID = "SELECT * FROM user WHERE UserID = ?";
             User user = jdbc.queryForObject(SELECT_USER_BY_ID, new UserMapper(), id);
-            user.setAccounts(getAccountsForUser(id));
+            if (user != null) {
+                user.setAccounts(getAccountsForUser(id));
+            }
             return user;
 
         } catch(DataAccessException ex) {
@@ -33,9 +37,19 @@ public class UserDaoDB implements UserDao{
     }
 
     //     create a helper method to get accounts for a user:
-    private List<Account> getAccountsForUser(int id){
+    @Override
+    public List<Account> getAccountsForUser(int id){
         final String SELECT_ACCOUNTS_FOR_USER = "SELECT * FROM Account WHERE UserID = ?";
-        return jdbc.query(SELECT_ACCOUNTS_FOR_USER, new AccountDaoDB.AccountMapper(), id);
+        List<Account> accounts = new ArrayList<>();
+        try {
+            accounts = jdbc.query(SELECT_ACCOUNTS_FOR_USER, new AccountDaoDB.AccountMapper(), id);
+        } catch (DataAccessException ex) {
+            // Handle the exception appropriately or log it
+            ex.printStackTrace();
+        }
+
+        return accounts.isEmpty() ? null : accounts;
+        //make sure that the getAccountsForUser method returns null if there are no associated accounts for the user
     }
 
     @Override
@@ -50,7 +64,7 @@ public class UserDaoDB implements UserDao{
 
             return users;
         } catch (DataAccessException ex) {
-            return new ArrayList<>();
+            return null;
         }
     }
 
@@ -79,8 +93,12 @@ public class UserDaoDB implements UserDao{
     private void insertUserAccounts(User user) {
         final String INSERT_USER_ACCOUNTS = "INSERT INTO Account (AccountName, AccountType, UserID) VALUES (?, ?, ?)";
 
-        for (Account account : user.getAccounts()) {
-            jdbc.update(INSERT_USER_ACCOUNTS, account.getAccountName(), account.getAccountType(), user.getUserID());
+        if (user != null && user.getAccounts() != null) {
+            for (Account account : user.getAccounts()) {
+                System.out.println("Inserting account: " + account.getAccountName());
+                int rowsAffected = jdbc.update(INSERT_USER_ACCOUNTS, account.getAccountName(), account.getAccountType(), user.getUserID());
+                System.out.println(rowsAffected + " row(s) inserted.");
+            }
         }
     }
 
@@ -103,10 +121,12 @@ public class UserDaoDB implements UserDao{
 
     private void updateAccountsForUser(User user) {
         final String UPDATE_USER_ACCOUNTS = "UPDATE Account SET AccountName = ?, AccountType = ? WHERE AccountID = ? AND UserID = ?";
-
-        for (Account account : user.getAccounts()) {
-            jdbc.update(UPDATE_USER_ACCOUNTS, account.getAccountName(), account.getAccountType(), account.getAccountID(), user.getUserID());
+        if (user != null && user.getAccounts() != null) {
+            for (Account account : user.getAccounts()) {
+                jdbc.update(UPDATE_USER_ACCOUNTS, account.getAccountName(), account.getAccountType(), account.getAccountID(), user.getUserID());
+            }
         }
+
     }
 
     @Override
@@ -135,6 +155,9 @@ public class UserDaoDB implements UserDao{
             user.setLastName(rs.getString("LastName"));
             user.setEmail(rs.getString("Email"));
             user.setPhone(rs.getString("Phone"));
+
+//            List<Account> accounts = accountDao.getAccountsByUserId(user.getUserID());
+//            user.setAccounts(accounts);   ****Don't use it here.
             return user;
         }
     }

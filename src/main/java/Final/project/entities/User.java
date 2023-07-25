@@ -1,6 +1,7 @@
 package Final.project.entities;
 
 import java.util.List;
+import java.util.Objects;
 
 public class User {
     private int userID;
@@ -9,8 +10,8 @@ public class User {
     private String email;
     private String phone;
     private List<Account> accounts; // Composition: User has multiple Accounts
+    //accounts can be null when adding a user.
 
-    // Constructor, getters, setters, and other methods
 
     public int getUserID() {
         return userID;
@@ -84,6 +85,18 @@ public class User {
         result = 31 * result + phone.hashCode();
         result = 31 * result + accounts.hashCode();
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userID=" + userID +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", accounts=" + accounts +
+                '}';
     }
 }
 

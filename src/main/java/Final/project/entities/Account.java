@@ -1,6 +1,7 @@
 package Final.project.entities;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Account {
     private int accountID;
@@ -8,7 +9,7 @@ public class Account {
     private String accountType;
 
     //private User user;
-    //private int userID; // Foreign key to associate the account with the user
+    private int userID; // Foreign key to associate the account with the user
     private List<Portfolio> portfolios; // Composition: Account has multiple Portfolios
 
     // Constructor, getters, setters, and other methods
@@ -45,6 +46,14 @@ public class Account {
         this.portfolios = portfolios;
     }
 
+    public int getUserID() {
+        return userID;
+    }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -53,9 +62,10 @@ public class Account {
         Account account = (Account) o;
 
         if (accountID != account.accountID) return false;
+        if (userID != account.userID) return false;
         if (!accountName.equals(account.accountName)) return false;
         if (!accountType.equals(account.accountType)) return false;
-        return portfolios.equals(account.portfolios);
+        return Objects.equals(portfolios, account.portfolios);
     }
 
     @Override
@@ -63,7 +73,19 @@ public class Account {
         int result = accountID;
         result = 31 * result + accountName.hashCode();
         result = 31 * result + accountType.hashCode();
-        result = 31 * result + portfolios.hashCode();
+        result = 31 * result + userID;
+        result = 31 * result + (portfolios != null ? portfolios.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "accountID=" + accountID +
+                ", accountName='" + accountName + '\'' +
+                ", accountType='" + accountType + '\'' +
+                ", userID=" + userID +
+                ", portfolios=" + portfolios +
+                '}';
     }
 }

@@ -10,8 +10,8 @@ USE InvestmentManagementDBTest;
 --  select * from Portfolio_Asset;
 --  select * from Asset;
 --  select * from Portfolio;
---  select * from Account;
---  select * from User;
+  select * from Account;
+  select * from User;
 
 -- Create the User table
 CREATE TABLE User (

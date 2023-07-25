@@ -99,5 +99,18 @@ public class Transaction {
         result = 31 * result + asset.hashCode();
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "transactionID=" + transactionID +
+                ", transactionDate=" + transactionDate +
+                ", amount=" + amount +
+                ", transactionType='" + transactionType + '\'' +
+                ", description='" + description + '\'' +
+                ", portfolio=" + portfolio +
+                ", asset=" + asset +
+                '}';
+    }
 }
 
