@@ -1,6 +1,7 @@
 package Final.project.dao;
 
 import Final.project.entities.Account;
+import Final.project.entities.Portfolio;
 import Final.project.entities.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,6 +20,10 @@ class AccountDaoDBTest {
 
     @Autowired
     AccountDao accountDao;
+
+    @Autowired
+    PortfolioDao portfolioDao;
+
     private User testUser;
     private List<Account> testAccounts;
 
@@ -34,10 +39,15 @@ class AccountDaoDBTest {
         accounts.forEach(account -> {
             accountDao.deleteAccountById(account.getAccountID());
         });
+
+        List<Portfolio> portfolios = portfolioDao.getAllPortfolios();
+        portfolios.forEach(portfolio -> {
+            portfolioDao.deletePortfolioById(portfolio.getPortfolioID());
+        });
     }
 
     @Test
-    public void testAddAndGetAccountById() {
+    public void testAddAndGetAccountByIdWithoutPortfolios() {
         // Create a test user
         testUser = new User();
         testUser.setFirstName("John");
@@ -75,6 +85,76 @@ class AccountDaoDBTest {
         // Check if the accounts are associated with the correct user
         assertEquals(testUser.getUserID(), retrievedAccount1.getUserID());
         assertEquals(testUser.getUserID(), retrievedAccount2.getUserID());
+    }
+
+    @Test
+    public void testAddAndGetAccountById() {
+        // Create a test user
+        testUser = new User();
+        testUser.setFirstName("Sara");
+        testUser.setLastName("Faith");
+        testUser.setEmail("sara@example.com");
+        testUser.setPhone("111-111-2233");
+        testUser = userDao.addUser(testUser);
+
+        // Create test accounts associated with the test user
+        testAccounts = new ArrayList<>();
+
+        // Account 1
+        Account account1 = new Account();
+        account1.setAccountName("Savings Account");
+        account1.setAccountType("Savings");
+        account1.setUserID(testUser.getUserID());
+        account1 = accountDao.addAccount(account1);
+        testAccounts.add(account1);
+
+        // Create test portfolios and add them to the list for Account 1
+        List<Portfolio> portfoliosForAccount1 = new ArrayList<>();
+        Portfolio portfolio1ForAccount1 = new Portfolio();
+        portfolio1ForAccount1.setPortfolioName("Portfolio 1 for Account 1");
+        portfolio1ForAccount1.setAccountID(account1.getAccountID());
+        portfolio1ForAccount1 = portfolioDao.addPortfolio(portfolio1ForAccount1);
+        portfoliosForAccount1.add(portfolio1ForAccount1);
+
+        Portfolio portfolio2ForAccount1 = new Portfolio();
+        portfolio2ForAccount1.setPortfolioName("Portfolio 2 for Account 1");
+        portfolio2ForAccount1.setAccountID(account1.getAccountID());
+        portfolio2ForAccount1 = portfolioDao.addPortfolio(portfolio2ForAccount1);
+        portfoliosForAccount1.add(portfolio2ForAccount1);
+
+        account1.setPortfolios(portfoliosForAccount1);
+
+        // Account 2
+        Account account2 = new Account();
+        account2.setAccountName("Investment Account");
+        account2.setAccountType("Investment");
+        account2.setUserID(testUser.getUserID());
+        account2 = accountDao.addAccount(account2);
+        testAccounts.add(account2);
+
+        // Create test portfolios and add them to the list for Account 2
+        List<Portfolio> portfoliosForAccount2 = new ArrayList<>();
+        Portfolio portfolio1ForAccount2 = new Portfolio();
+        portfolio1ForAccount2.setPortfolioName("Portfolio 1 for Account 2");
+        portfolio1ForAccount2.setAccountID(account2.getAccountID());
+        portfolio1ForAccount2 = portfolioDao.addPortfolio(portfolio1ForAccount2);
+        portfoliosForAccount2.add(portfolio1ForAccount2);
+
+        Portfolio portfolio2ForAccount2 = new Portfolio();
+        portfolio2ForAccount2.setPortfolioName("Portfolio 2 for Account 2");
+        portfolio2ForAccount2.setAccountID(account2.getAccountID());
+        portfolio2ForAccount2 = portfolioDao.addPortfolio(portfolio2ForAccount2);
+        portfoliosForAccount2.add(portfolio2ForAccount2);
+
+        account2.setPortfolios(portfoliosForAccount2);
+
+        // Retrieve accounts by ID and check if they match the test accounts
+        for (Account testAccount : testAccounts) {
+            Account retrievedAccount = accountDao.getAccountById(testAccount.getAccountID());
+            assertNotNull(retrievedAccount);
+            assertEquals(testAccount, retrievedAccount);
+            assertEquals(testAccount.getPortfolios(), retrievedAccount.getPortfolios());
+        }
     }
 
     @Test
@@ -172,42 +252,39 @@ class AccountDaoDBTest {
     }
 
     @Test
-    public void testGetAccountsByUserId() {
+    public void testDeleteAccountByIdWithPortfolio() {
         // Create a test user
         testUser = new User();
         testUser.setFirstName("Sara");
         testUser.setLastName("Faith");
-        testUser.setEmail("john@example.com");
+        testUser.setEmail("sara@example.com");
         testUser.setPhone("111-111-2233");
         testUser = userDao.addUser(testUser);
 
-        // Create test accounts associated with the test user
-        testAccounts = new ArrayList<>();
-        Account account1 = new Account();
-        account1.setAccountName("Savings Account");
-        account1.setAccountType("Savings");
-        account1.setUserID(testUser.getUserID());
-        testAccounts.add(accountDao.addAccount(account1));
+        // Create a test account associated with the test user
+        Account testAccount = new Account();
+        testAccount.setAccountName("Savings Account");
+        testAccount.setAccountType("Savings");
+        testAccount.setUserID(testUser.getUserID());
+        testAccount = accountDao.addAccount(testAccount);
 
-        Account account2 = new Account();
-        account2.setAccountName("Investment Account");
-        account2.setAccountType("Investment");
-        account2.setUserID(testUser.getUserID());
-        testAccounts.add(accountDao.addAccount(account2));
+        // Create a portfolio for the test account
+        List<Portfolio> portfoliosForTestAccount = new ArrayList<>();
+        Portfolio portfolioForTestAccount = new Portfolio();
+        portfolioForTestAccount.setPortfolioName("Portfolio for Test Account");
+        portfolioForTestAccount.setAccountID(testAccount.getAccountID());
+        portfolioForTestAccount = portfolioDao.addPortfolio(portfolioForTestAccount);
+        portfoliosForTestAccount.add(portfolioForTestAccount);
 
-        // Create another test account not associated with the test user
-        Account account3 = new Account();
-        account3.setAccountName("Personal Account");
-        account3.setAccountType("Personal");
-        account3.setUserID(-1); // Not associated with any user
-        accountDao.addAccount(account3);
+        testAccount.setPortfolios(portfoliosForTestAccount);
 
-        // Retrieve accounts associated with the test user using the method under test
-        List<Account> retrievedAccounts = accountDao.getAccountsByUserId(testUser.getUserID());
+        // Delete the test account by ID
+        accountDao.deleteAccountById(testAccount.getAccountID());
 
-        // Check if the retrieved accounts are not null and match the test accounts
-        assertNotNull(retrievedAccounts);
-        assertEquals(testAccounts.size(), retrievedAccounts.size());
-        assertTrue(retrievedAccounts.containsAll(testAccounts));
+        // Try to retrieve the deleted account by ID and check if it's null
+        Account retrievedAccount = accountDao.getAccountById(testAccount.getAccountID());
+        assertNull(retrievedAccount);
     }
+
+
 }

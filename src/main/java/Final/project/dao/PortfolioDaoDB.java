@@ -69,7 +69,7 @@ public class PortfolioDaoDB implements PortfolioDao{
 
         if (portfolio != null && portfolio.getAssets() != null) {
             for (Asset asset : portfolio.getAssets()) {
- //               jdbc.update(INSERT_PORTFOLIO_ASSETS, portfolio.getPortfolioID(), asset.getAssetID(), asset.getQuantity());
+                jdbc.update(INSERT_PORTFOLIO_ASSETS, portfolio.getPortfolioID(), asset.getAssetID(), asset.getQuantiy());
             }
         }
     }
@@ -124,8 +124,7 @@ public class PortfolioDaoDB implements PortfolioDao{
     @Override
     public List<Asset> getAssetsForPortfolio(int portfolioId) {
         final String SELECT_ASSETS_FOR_PORTFOLIO = "SELECT * FROM Asset JOIN Portfolio_Asset ON Asset.AssetID = Portfolio_Asset.AssetID WHERE Portfolio_Asset.PortfolioID = ?";
- //       return jdbc.query(SELECT_ASSETS_FOR_PORTFOLIO, new AssetDaoDB.AssetMapper(), portfolioId);
-        return null;
+        return jdbc.query(SELECT_ASSETS_FOR_PORTFOLIO, new AssetDaoDB.AssetMapper(), portfolioId);
 
     }
 
