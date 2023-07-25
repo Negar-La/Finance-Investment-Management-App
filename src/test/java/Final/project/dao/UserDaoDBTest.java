@@ -24,9 +24,6 @@ public class UserDaoDBTest {
     @Autowired
     AccountDao accountDao;
 
-    private User testUser;
-    private List<Account> testAccounts;
-
     @BeforeEach
     public void setUp() {
         // Clear all existing users from the database
@@ -39,14 +36,12 @@ public class UserDaoDBTest {
         accounts.forEach(account -> {
             accountDao.deleteAccountById(account.getAccountID());
         });
-
-
     }
 
     @Test
     public void testAddUserWithoutAccounts() {
         // Create a test user
-        testUser = new User();
+        User testUser = new User();
         testUser.setFirstName("John");
         testUser.setLastName("Doe");
         testUser.setEmail("john@example.com");
