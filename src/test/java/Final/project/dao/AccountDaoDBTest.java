@@ -29,7 +29,7 @@ class AccountDaoDBTest {
         users.forEach(user -> {
             userDao.deleteUserById(user.getUserID());
         });
-
+        // Clear all existing accounts from the database
         List<Account> accounts = accountDao.getAllAccounts();
         accounts.forEach(account -> {
             accountDao.deleteAccountById(account.getAccountID());
