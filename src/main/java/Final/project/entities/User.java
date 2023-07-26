@@ -1,13 +1,25 @@
 package Final.project.entities;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.List;
 import java.util.Objects;
 
 public class User {
     private int userID;
+    @NotBlank(message = "First Name must not be blank")
+    @Size(max = 45, message="First Name must be fewer than 45 characters")
     private String firstName;
+    @NotBlank(message = "Last Name must not be blank")
+    @Size(max = 45, message="Last Name must be fewer than 45 characters")
     private String lastName;
+    @NotBlank(message = "Email must not be blank")
+    @Email(message = "Email should be valid")
     private String email;
+    @NotBlank(message = "Phone must not be blank")
+    @Pattern(regexp = "\\d{3}-\\d{3}-\\d{4}", message = "Phone must be in the format xxx-xxx-xxxx")
     private String phone;
     private List<Account> accounts; // Composition: User has multiple Accounts
     //accounts can be null when adding a user.
