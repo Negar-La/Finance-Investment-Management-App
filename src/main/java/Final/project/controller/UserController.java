@@ -33,7 +33,7 @@ public class UserController {
 
     Set<ConstraintViolation<User>> violations = new HashSet<>();
     @GetMapping("users")
-    public String displayOrganizations(Model model) {
+    public String displayUsers(Model model) {
         List<User> users = userDao.getAllUsers();
         List<Account> accounts = accountDao.getAllAccounts();
         model.addAttribute("users", users);
@@ -43,7 +43,7 @@ public class UserController {
     }
 
     @PostMapping("addUser")
-    public String addOrganization(HttpServletRequest request) {
+    public String addUser(HttpServletRequest request) {
         String[] accountIds = request.getParameterValues("accountID");
 
         List<Account> accounts = new ArrayList<>();
