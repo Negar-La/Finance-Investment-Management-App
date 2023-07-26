@@ -20,11 +20,14 @@ public class AssetDaoDB implements AssetDao{
         try {
             final String SELECT_ASSET_BY_ID = "SELECT * FROM Asset WHERE AssetID = ?";
             return jdbc.queryForObject(SELECT_ASSET_BY_ID, new AssetMapper(), id);
+
         } catch (DataAccessException ex) {
             // If no asset is found with the given ID, return null
             return null;
         }
     }
+
+
 
     @Override
     public List<Asset> getAllAssets() {

@@ -1,6 +1,8 @@
 package Final.project.entities;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.util.List;
 import java.util.Objects;
@@ -15,6 +17,7 @@ public class Account {
     private String accountType;
 
     //private User user;
+    @Positive(message = "User ID must be a positive number")
     private int userID; // Foreign key to associate the account with the user
     private List<Portfolio> portfolios; // Composition: Account has multiple Portfolios
 

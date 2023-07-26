@@ -1,10 +1,14 @@
 package Final.project.entities;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.List;
 import java.util.Objects;
 
 public class Portfolio {
     private int portfolioID;
+    @NotBlank(message = "Account Type must not be blank")
+    @Size(max = 45, message="Account Type must be fewer than 45 characters")
     private String portfolioName;
     //private int accountID; // Foreign key to associate the portfolio with the account
 
@@ -55,9 +59,10 @@ public class Portfolio {
 
         if (portfolioID != portfolio.portfolioID) return false;
         if (accountID != portfolio.accountID) return false;
-        if (!portfolioName.equals(portfolio.portfolioName)) return false;
+        if (!Objects.equals(portfolioName, portfolio.portfolioName)) return false;
         return Objects.equals(assets, portfolio.assets);
     }
+
 
     @Override
     public int hashCode() {

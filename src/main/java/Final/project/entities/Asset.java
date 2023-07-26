@@ -7,7 +7,7 @@ public class Asset {
     private String assetName;
     private String assetType;
 
-    private BigDecimal quantity;
+    //private int quantity;
 
     // Constructors, getters, setters, and other methods
 
@@ -35,13 +35,6 @@ public class Asset {
         this.assetType = assetType;
     }
 
-    public BigDecimal getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(BigDecimal quantiy) {
-        this.quantity = quantiy;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -52,8 +45,7 @@ public class Asset {
 
         if (assetID != asset.assetID) return false;
         if (!assetName.equals(asset.assetName)) return false;
-        if (!assetType.equals(asset.assetType)) return false;
-        return quantity.equals(asset.quantity);
+        return assetType.equals(asset.assetType);
     }
 
     @Override
@@ -61,7 +53,6 @@ public class Asset {
         int result = assetID;
         result = 31 * result + assetName.hashCode();
         result = 31 * result + assetType.hashCode();
-        result = 31 * result + quantity.hashCode();
         return result;
     }
 
@@ -71,7 +62,6 @@ public class Asset {
                 "assetID=" + assetID +
                 ", assetName='" + assetName + '\'' +
                 ", assetType='" + assetType + '\'' +
-                ", quantiy=" + quantity +
                 '}';
     }
 }
