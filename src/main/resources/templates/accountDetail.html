@@ -36,32 +36,33 @@
         </div>
     </div>
     <div class="row m-4 border border-dark">
-        <div class="col-6 text-right"><strong>User ID</strong></div>
-        <div class="col-6 text-left">
-            <span th:text="${user.userID}">display id</span>
-        </div>
 
-        <div class="col-6 text-right"><strong>Name</strong></div>
+        <div class="col-6 text-right"><strong>User</strong></div>
         <div class="col-6 text-left">
             <span th:text="${user.firstName + ' ' + user.lastName}">display name</span>
         </div>
 
-        <div class="col-6 text-right"><strong>Email</strong></div>
+        <div class="col-6 text-right"><strong>Account ID</strong></div>
         <div class="col-6 text-left">
-            <span th:text="${user.email}">display Email</span>
+            <span th:text="${account.accountID}">display id</span>
         </div>
 
-        <div class="col-6 text-right"><strong>Phone</strong></div>
+        <div class="col-6 text-right"><strong>Account Name</strong></div>
         <div class="col-6 text-left">
-            <span th:text="${user.phone}">display Phone</span>
+            <span th:text="${account.accountName}">display name</span>
+        </div>
+
+        <div class="col-6 text-right"><strong>Account Type</strong></div>
+        <div class="col-6 text-left">
+            <span th:text="${account.accountType}">display type</span>
         </div>
 
 
-        <div class="col-6 text-right"><strong>Accounts</strong></div>
+        <div class="col-6 text-right"><strong>Portfolios</strong></div>
         <div class="col-6 text-left">
-                    <span th:each="account : ${user.accounts}">
-                        <span th:text="${account.accountName}">
-                            display account</span><br/>
+                    <span th:each="portfolio : ${account.portfolios}">
+                        <span th:text="${portfolio.portfolioName}">
+                            display portfolio</span><br/>
                     </span>
         </div>
 
@@ -69,7 +70,7 @@
 
     <div class="container bg-light">
         <div class="col-md-12 text-center">
-            <button type="button" class="btn btn-primary"><a class="btn btn-primary" href="users" role="button">Go Back</a></button>
+            <button type="button" class="btn btn-primary"><a class="btn btn-primary" href="accounts" role="button">Go Back</a></button>
         </div>
     </div>
 
