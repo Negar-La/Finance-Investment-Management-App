@@ -1,11 +1,17 @@
 package Final.project.entities;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.List;
 import java.util.Objects;
 
 public class Account {
     private int accountID;
+    @NotBlank(message = "Account Name must not be blank")
+    @Size(max = 45, message="Account Name must be fewer than 45 characters")
     private String accountName;
+    @NotBlank(message = "Account Type must not be blank")
+    @Size(max = 45, message="Account Type must be fewer than 45 characters")
     private String accountType;
 
     //private User user;
