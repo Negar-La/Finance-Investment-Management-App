@@ -95,27 +95,26 @@ VALUES
 CREATE TABLE Portfolio_Asset (
     PortfolioID INT NOT NULL,
     AssetID INT NOT NULL,
-    Quantity DECIMAL(10, 2) NOT NULL,
     PRIMARY KEY (PortfolioID, AssetID),
     FOREIGN KEY (PortfolioID) REFERENCES Portfolio(PortfolioID),
     FOREIGN KEY (AssetID) REFERENCES Asset(AssetID)
 );
 
 -- Insert sample data into Portfolio_Asset table
-INSERT INTO Portfolio_Asset (PortfolioID, AssetID, Quantity)
+INSERT INTO Portfolio_Asset (PortfolioID, AssetID)
 VALUES
-    (1, 1, 100.50),
-    (1, 2, 25.00),
-    (2, 3, 50.75),
-    (3, 1, 75.25),
-    (4, 2, 10.00),
-    (5, 3, 35.50),
-    (6, 4, 200.00),
-    (1, 5, 5.00),
-    (2, 6, 15.50),
-    (3, 4, 100.00),
-    (4, 5, 30.25),
-    (5, 6, 50.00);
+    (1, 1),
+    (1, 2),
+    (2, 3),
+    (3, 1),
+    (4, 2),
+    (5, 3),
+    (6, 4),
+    (1, 5),
+    (2, 6),
+    (3, 4),
+    (4, 5),
+    (5, 6);
 
 -- Create the Transaction table
 CREATE TABLE Transaction (

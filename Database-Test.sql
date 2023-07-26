@@ -7,9 +7,9 @@ CREATE DATABASE InvestmentManagementDBTest;
 USE InvestmentManagementDBTest;
 
 --  select * from Transaction;
---  select * from Portfolio_Asset;
---  select * from Asset;
---  select * from Portfolio;
+  select * from Portfolio_Asset;
+  select * from Asset;
+  select * from Portfolio;
   select * from Account;
   select * from User;
 
@@ -55,7 +55,6 @@ CREATE TABLE Asset (
 CREATE TABLE Portfolio_Asset (
     PortfolioID INT NOT NULL,
     AssetID INT NOT NULL,
-    Quantity DECIMAL(10, 2) NOT NULL,
     PRIMARY KEY (PortfolioID, AssetID),
     FOREIGN KEY (PortfolioID) REFERENCES Portfolio(PortfolioID),
     FOREIGN KEY (AssetID) REFERENCES Asset(AssetID)
