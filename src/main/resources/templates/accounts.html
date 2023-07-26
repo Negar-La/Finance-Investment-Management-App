@@ -97,9 +97,9 @@
                 <tbody>
                 <tr th:each="account : ${accounts}">
                     <td th:text="${account.accountID}">User ID</td>
-                    <td th:text="${account.accountName}">User Name</td>
-                    <td th:text='${account.accountType}'>User Email</td>
-                    <td th:text='${account.userID}'>User Phone</td>
+                    <td th:text="${account.accountName}">Account Name</td>
+                    <td th:text='${account.accountType}'>Account Type</td>
+                    <td th:text='${account.userID}'>User ID</td>
                     <td><a href="#" th:href="@{/accountDetail(id=${account.accountID})}">Details</a></td>
                     <td><a href="#" th:href="@{/editAccount(id=${account.accountID})}">Edit</a></td>
                     <td><a href="#" th:href="@{/deleteAccount(id=${account.accountID})}">Delete</a></td>

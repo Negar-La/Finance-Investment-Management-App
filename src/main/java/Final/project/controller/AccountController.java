@@ -73,4 +73,26 @@ public class AccountController {
         }
         return "redirect:/accounts";
     }
+
+    @GetMapping("accountDetail")
+    public String accountDetail(Integer id, Model model) {
+        Account account = accountDao.getAccountById(id);
+        model.addAttribute("account", account);
+
+        // Fetch the associated User based on the userID stored in the Account
+        int userId = account.getUserID();
+        User user = userDao.getUserById(userId);
+        model.addAttribute("user", user);
+
+        return "accountDetail";
+    }
+
+    @GetMapping("deleteAccount")
+    public String deleteAccount(HttpServletRequest request) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        accountDao.deleteAccountById(id);
+
+        return "redirect:/accounts";
+    }
+
 }
