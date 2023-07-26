@@ -65,11 +65,11 @@ public class PortfolioDaoDB implements PortfolioDao{
 
     // Helper method to insert assets for a portfolio
     private void insertPortfolioAssets(Portfolio portfolio) {
-        final String INSERT_PORTFOLIO_ASSETS = "INSERT INTO Portfolio_Asset (PortfolioID, AssetID, Quantity) VALUES (?, ?, ?)";
+        final String INSERT_PORTFOLIO_ASSETS = "INSERT INTO Portfolio_Asset (PortfolioID, AssetID) VALUES (?, ?)";
 
         if (portfolio != null && portfolio.getAssets() != null) {
             for (Asset asset : portfolio.getAssets()) {
-                jdbc.update(INSERT_PORTFOLIO_ASSETS, portfolio.getPortfolioID(), asset.getAssetID(), asset.getQuantity());
+                jdbc.update(INSERT_PORTFOLIO_ASSETS, portfolio.getPortfolioID(), asset.getAssetID());
             }
         }
     }
@@ -123,10 +123,7 @@ public class PortfolioDaoDB implements PortfolioDao{
 
     @Override
     public List<Asset> getAssetsForPortfolio(int portfolioId) {
-        final String SELECT_ASSETS_FOR_PORTFOLIO = "SELECT Asset.*, Portfolio_Asset.Quantity " +
-                "FROM Asset " +
-                "JOIN Portfolio_Asset ON Asset.AssetID = Portfolio_Asset.AssetID " +
-                "WHERE Portfolio_Asset.PortfolioID = ?";
+        final String SELECT_ASSETS_FOR_PORTFOLIO = "SELECT Asset.* FROM Asset JOIN Portfolio_Asset ON Asset.AssetID = Portfolio_Asset.AssetID WHERE Portfolio_Asset.PortfolioID = ?";
         return jdbc.query(SELECT_ASSETS_FOR_PORTFOLIO, new AssetDaoDB.AssetMapper(), portfolioId);
     }
 
