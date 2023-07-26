@@ -7,8 +7,6 @@ public class Asset {
     private String assetName;
     private String assetType;
 
-    //private int quantity;
-
     // Constructors, getters, setters, and other methods
 
     public int getAssetID() {

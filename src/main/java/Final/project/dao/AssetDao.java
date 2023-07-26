@@ -14,5 +14,7 @@ public interface AssetDao {
 
     List<Asset> getAssetsByPortfolioId(int portfolioId);
 
-    List<Asset> getAssetsByUserId(int userId);
+    //List<Asset> getAssetsByUserId(int userId);
+
+
 }

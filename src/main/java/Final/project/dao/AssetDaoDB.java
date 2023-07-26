@@ -52,6 +52,8 @@ public class AssetDaoDB implements AssetDao{
         }
     }
 
+
+
     @Override
     public void updateAsset(Asset asset) {
         final String UPDATE_ASSET = "UPDATE Asset SET AssetName = ?, AssetType = ? WHERE AssetID = ?";
@@ -77,15 +79,15 @@ public class AssetDaoDB implements AssetDao{
         return jdbc.query(SELECT_ASSETS_BY_PORTFOLIO_ID, new AssetMapper(), portfolioId);
     }
 
-    @Override
-    public List<Asset> getAssetsByUserId(int userId) {
-        final String SELECT_ASSETS_BY_USER_ID = "SELECT a.* , pa.Quantity FROM Asset a " +
-                "JOIN Portfolio_Asset pa ON a.AssetID = pa.AssetID " +
-                "JOIN Portfolio p ON pa.PortfolioID = p.PortfolioID " +
-                "JOIN Account ac ON p.AccountID = ac.AccountID " +
-                "WHERE ac.UserID = ?";
-        return jdbc.query(SELECT_ASSETS_BY_USER_ID, new AssetMapper(), userId);
-    }
+//    @Override
+//    public List<Asset> getAssetsByUserId(int userId) {
+//        final String SELECT_ASSETS_BY_USER_ID = "SELECT a.* , pa.Quantity FROM Asset a " +
+//                "JOIN Portfolio_Asset pa ON a.AssetID = pa.AssetID " +
+//                "JOIN Portfolio p ON pa.PortfolioID = p.PortfolioID " +
+//                "JOIN Account ac ON p.AccountID = ac.AccountID " +
+//                "WHERE ac.UserID = ?";
+//        return jdbc.query(SELECT_ASSETS_BY_USER_ID, new AssetMapper(), userId);
+//    }
 
     public static final class AssetMapper implements RowMapper<Asset> {
         @Override
