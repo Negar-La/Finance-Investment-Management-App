@@ -88,9 +88,8 @@ class TransactionDaoDBTest {
         asset1.setAssetType("Type 1");
         asset1 = assetDao.addAsset(asset1);
 
-
         Portfolio testPortfolio = new Portfolio();
-        testPortfolio.setPortfolioName("John's Portfolio");
+        testPortfolio.setPortfolioName("Negar's Portfolio");
         testPortfolio.setAccountID(account1.getAccountID());
         testPortfolio.setAssets(List.of(asset1));
         testPortfolio = portfolioDao.addPortfolio(testPortfolio);
@@ -104,7 +103,10 @@ class TransactionDaoDBTest {
 
         // Set the portfolio and asset objects
         transaction.setPortfolio(testPortfolio);
-       transaction.setAsset(asset1);
+
+        // Now, let's fetch the corresponding asset from the database and set it to the transaction's asset property
+        Asset retrievedAsset = assetDao.getAssetById(asset1.getAssetID());
+        transaction.setAsset(retrievedAsset);
 
         // Add the transaction to the database
         transaction = transactionDao.addTransaction(transaction);

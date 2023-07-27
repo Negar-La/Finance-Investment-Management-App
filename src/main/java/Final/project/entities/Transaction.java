@@ -1,14 +1,23 @@
 package Final.project.entities;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Transaction {
     private int transactionID;
+    @NotNull(message = "Invalid date.")
     private LocalDateTime transactionDate;
+    @NotNull(message = "Invalid amount.")
     private BigDecimal amount;
+    @NotBlank(message = "Transaction Type must not be blank")
+    @Size(max = 45, message="Transaction Type must be fewer than 45 characters")
     private String transactionType;
+    @NotBlank(message = "Description must not be blank")
+    @Size(max = 45, message="Description  must be fewer than 45 characters")
     private String description;
 
     private Portfolio portfolio;

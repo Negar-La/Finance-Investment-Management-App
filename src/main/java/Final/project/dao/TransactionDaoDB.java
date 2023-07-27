@@ -43,17 +43,21 @@ public class TransactionDaoDB implements TransactionDao{
     }
 
     private void insertAsset(Transaction transaction) {
-        String sql = "SELECT * FROM Portfolio_Asset PA " +
-                "JOIN Asset A ON PA.AssetID = A.AssetID " +
-                "WHERE PA.PortfolioID = ?";
+        System.out.println("Portfolio before setting assets:");
+        System.out.println(transaction.getPortfolio());
+
+        String sql = "SELECT A.* FROM Asset A JOIN Portfolio_Asset PA ON A.AssetID = PA.AssetID WHERE PA.PortfolioID = ?";
         List<Asset> assets = jdbc.query(sql, new AssetDaoDB.AssetMapper(), transaction.getPortfolio().getPortfolioID());
         transaction.getPortfolio().setAssets(assets);
+        String sql_for_asset = "select a.* from asset a join transaction t on a.assetID = t.assetID where t.transactionID = ?";
+        Asset asset = jdbc.queryForObject(sql_for_asset, new AssetDaoDB.AssetMapper(), transaction.getTransactionID());
+        transaction.setAsset(asset);
+
+        System.out.println("Portfolio after setting assets:");
+        System.out.println(transaction.getPortfolio());
     }
 
-
-
-
-
+    
     @Override
     public List<Transaction> getAllTransactions() {
         final String SELECT_ALL_TRANSACTIONS = "SELECT * FROM Transaction";
@@ -132,6 +136,16 @@ public class TransactionDaoDB implements TransactionDao{
             transaction.setAmount(rs.getBigDecimal("Amount"));
             transaction.setTransactionType(rs.getString("TransactionType"));
             transaction.setDescription(rs.getString("Description"));
+
+//            Portfolio portfolio = new Portfolio();
+//            portfolio.setPortfolioID(rs.getInt("PortfolioID"));
+//            transaction.setPortfolio(portfolio);
+//
+//            // Fetch the Asset object from the database using assetID and set it to the transaction
+//            Asset asset = new Asset();
+//            asset.setAssetID(rs.getInt("AssetID"));
+//            transaction.setAsset(asset);
+
             return transaction;
         }
     }
