@@ -44,38 +44,45 @@
         </div>
 
         <div class="col-3 text-center m-3">
-            <span class="h3">Add Account</span>
+            <span class="h3">Add Portfolio</span>
         </div>
         <div class="col-7 text-center m-3">
             <form action="addPortfolio" method="POST">
                 <div class="form-group row">
-                    <label for="accountUserID" class="col-3 col-form-label">
-                        Enter User ID</label>
+                    <label for="accountID" class="col-3 col-form-label">
+                        Enter Account ID</label>
                     <div class="col-9">
-                        <input type="text" name="accountUserID"
-                               id="accountUserID" class="form-control"/>
+                        <input type="number" name="accountID"
+                               id="accountID" class="form-control"/>
                     </div>
                 </div>
 
                 <div class="form-group row">
-                    <label for="accountName" class="col-3 col-form-label">
-                        Account Name</label>
+                    <label for="portfolioName" class="col-3 col-form-label">
+                        Portfolio Name</label>
                     <div class="col-9">
-                        <input type="text" name="accountName"
-                               id="accountName" class="form-control"/>
+                        <input type="text" name="portfolioName"
+                               id="portfolioName" class="form-control"/>
                     </div>
                 </div>
 
                 <div class="form-group row">
-                    <label for="accountType" class="col-3 col-form-label">
-                        Account Type</label>
+                    <label for="assets" class="col-3 col-form-label">
+                        Asssets</label>
                     <div class="col-9">
-                        <input type="text" name="accountType"
-                               id="accountType" class="form-control"/>
+                        <select multiple id="assets" name="id"
+                                class="form-control" >
+                            <option th:each="asset : ${assets}"
+                                    th:value="${asset.assetID}"
+                                    th:text="${asset.assetName}">
+                                Asset Name</option>
+                        </select>
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Add Account</button>
+
+
+                <button type="submit" class="btn btn-primary">Add Portfolio</button>
             </form>
         </div>
     </div>
@@ -85,24 +92,22 @@
             <table class="table table-striped">
                 <thead>
                 <tr>
+                    <th>Portfolio ID</th>
+                    <th>Portfolio Name</th>
                     <th>Account ID</th>
-                    <th>Account Name</th>
-                    <th>Account Type</th>
-                    <th>User ID</th>
                     <th>Details</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="account : ${accounts}">
-                    <td th:text="${account.accountID}">User ID</td>
-                    <td th:text="${account.accountName}">Account Name</td>
-                    <td th:text='${account.accountType}'>Account Type</td>
-                    <td th:text='${account.userID}'>User ID</td>
-                    <td><a href="#" th:href="@{/accountDetail(id=${account.accountID})}">Details</a></td>
-                    <td><a href="#" th:href="@{/editAccount(id=${account.accountID})}">Edit</a></td>
-                    <td><a href="#" th:href="@{/deleteAccount(id=${account.accountID})}">Delete</a></td>
+                <tr th:each="portfolio : ${portfolios}">
+                    <td th:text="${portfolio.portfolioID}">Portfolio ID</td>
+                    <td th:text="${portfolio.portfolioName}">Portfolio Name</td>
+                    <td th:text='${portfolio.accountID}'>Account ID</td>
+                    <td><a href="#" th:href="@{/portfolioDetail(id=${portfolio.portfolioID})}">Details</a></td>
+                    <td><a href="#" th:href="@{/editPortfolio(id=${portfolio.portfolioID})}">Edit</a></td>
+                    <td><a href="#" th:href="@{/deletePortfolio(id=${portfolio.portfolioID})}">Delete</a></td>
                 </tr>
                 </tbody>
             </table>

@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <title>Edit Portfolio</title>
+</head>
+<body>
+<!-- Main Body of Page -->
+<div class="container">
+    <div class="row m-4">
+        <div class="col text-center border border-dark">
+            <h1><a href="/" class="text-dark">Edit Portfolio</a></h1>
+        </div>
+    </div>
+    <div class="row m-3 border border-dark">
+        <div class="col text-center m-3">
+            <a href="users" class="btn btn-outline-primary btn-lg">Users</a>
+        </div>
+        <div class="col text-center m-3">
+            <a href="accounts" class="btn btn-outline-primary btn-lg">Accounts</a>
+        </div>
+        <div class="col text-center m-3">
+            <a href="portfolios" class="btn btn-outline-primary btn-lg">Portfolios</a>
+        </div>
+        <div class="col text-center m-3">
+            <a href="assets" class="btn btn-outline-primary btn-lg">Assets</a>
+        </div>
+        <div class="col text-center m-3">
+            <a href="transactions" class="btn btn-outline-primary btn-lg">Transactions</a>
+        </div>
+    </div>
+    <div class="row m-4 border border-dark">
+        <div class="col-3 text-center m-3">
+            <span class="h3">Edit Portfolio</span>
+        </div>
+        <div class="col-7 text-center m-3">
+            <form action="editPortfolio" method="POST">
+                <div class="form-group row">
+                    <label for="portfolioName" class="col-3 col-form-label">Portfolio Name</label>
+                    <div class="col-9">
+                        <input type="text" name="portfolioName" id="portfolioName" class="form-control"
+                               th:value="${portfolio.portfolioName}" />
+                        <div th:if="${#fields.hasErrors('portfolio.portfolioName')}">
+                            <p th:each="error : ${#fields.errors('portfolio.portfolioName')}"
+                               class="alert alert-danger" th:text="${error}">
+                                Bad portfolio Name </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="heroes" class="col-3 col-form-label">Heroes</label>
+                    <div class="col-9">
+
+                        <select multiple id="heroes" name="assetIds" class="form-control">
+                            <option th:each="asset : ${assets}"
+                                    th:value="${asset.assetID}"
+                                    th:text="${asset.assetName}"
+                                    th:selected="${portfolio.assets.contains(asset)}">
+                                Hero Name</option>
+                        </select>
+                        <div th:if="${#fields.hasErrors('portfolio.assets')}">
+                            <p th:each="error : ${#fields.errors('portfolio.assets')}"
+                               class="alert alert-danger" th:text="${error}">
+                                Bad asset </p>
+                        </div>
+                    </div>
+                </div>
+
+                <input type="hidden" name="portfolioID" th:value="${portfolio.portfolioID}"/>
+                <button type="submit" class="btn btn-primary">Edit Portfolio</button>
+                <button type="button" class="btn btn-light"><a href="portfolios">Cancel</a></button>
+
+            </form>
+        </div>
+    </div>
+</div>
+<!-- End main body -->
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</body>
+</html>;
