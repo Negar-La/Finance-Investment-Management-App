@@ -8,6 +8,7 @@ import Final.project.entities.Account;
 import Final.project.entities.Asset;
 import Final.project.entities.Portfolio;
 import Final.project.entities.User;
+import Final.project.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,24 +30,24 @@ import java.util.Set;
 @Controller
 public class PortfolioController {
     @Autowired
-    UserDao userDao;
+    UserService userService;
 
     @Autowired
-    AccountDao accountDao;
+    AccountService accountService;
 
     @Autowired
-    PortfolioDao portfolioDao;
+    PortfolioService portfolioService;
 
     @Autowired
-    AssetDao assetDao;
+    AssetService assetService;
 
     Set<ConstraintViolation<Portfolio>> violations = new HashSet<>();
     @GetMapping("portfolios")
     public String displayAccounts(Model model) {
-        List<User> users = userDao.getAllUsers();
-        List<Account> accounts = accountDao.getAllAccounts();
-        List<Portfolio> portfolios = portfolioDao.getAllPortfolios();
-        List<Asset> assets = assetDao.getAllAssets();
+        List<User> users = userService.getAllUsers();
+        List<Account> accounts = accountService.getAllAccounts();
+        List<Portfolio> portfolios = portfolioService.getAllPortfolios();
+        List<Asset> assets = assetService.getAllAssets();
         model.addAttribute("users", users);
         model.addAttribute("accounts", accounts);
         model.addAttribute("portfolios", portfolios);
@@ -63,7 +64,7 @@ public class PortfolioController {
         List<Asset> assets = new ArrayList<>();
         if(assetIds != null) {
             for(String  assetId: assetIds) {
-                assets.add(assetDao.getAssetById(Integer.parseInt(assetId)));
+                assets.add(assetService.getAssetById(Integer.parseInt(assetId)));
             }
         }
 
@@ -80,19 +81,19 @@ public class PortfolioController {
         violations = validate.validate(portfolio);
 
         if(violations.isEmpty()) {
-            portfolioDao.addPortfolio(portfolio);
+            portfolioService.addPortfolio(portfolio);
         }
         return "redirect:/portfolios";
     }
 
     @GetMapping("portfolioDetail")
     public String portfolioDetail(Integer id, Model model) {
-        Portfolio portfolio = portfolioDao.getPortfolioById(id);
+        Portfolio portfolio = portfolioService.getPortfolioById(id);
         model.addAttribute("portfolio", portfolio);
 
         // Fetch the associated account based on the accountID stored in the portfolio
         int accountId = portfolio.getAccountID();
-        Account account = accountDao.getAccountById(accountId);
+        Account account = accountService.getAccountById(accountId);
         model.addAttribute("account", account);
 
         return "portfolioDetail";
@@ -101,15 +102,15 @@ public class PortfolioController {
     @GetMapping("deletePortfolio")
     public String deletePortfolio(HttpServletRequest request) {
         int id = Integer.parseInt(request.getParameter("id"));
-        portfolioDao.deletePortfolioById(id);
+        portfolioService.deletePortfolioById(id);
 
         return "redirect:/portfolios";
     }
 
     @GetMapping("editPortfolio")
     public String editPortfolio(Integer id, Model model) {
-        Portfolio portfolio = portfolioDao.getPortfolioById(id);
-        List<Asset> assets = assetDao.getAllAssets();
+        Portfolio portfolio = portfolioService.getPortfolioById(id);
+        List<Asset> assets = assetService.getAllAssets();
 
         model.addAttribute("portfolio", portfolio);
         model.addAttribute("assets", assets);
@@ -124,7 +125,7 @@ public class PortfolioController {
         List <Asset> assets = new ArrayList<>();
         if (assetIds != null){
             for (String assetId: assetIds){
-                assets.add(assetDao.getAssetById(Integer.parseInt(assetId)));
+                assets.add(assetService.getAssetById(Integer.parseInt(assetId)));
             }
             portfolio.setAssets(assets);
         }
@@ -137,7 +138,7 @@ public class PortfolioController {
 
 
         if(result.hasErrors()) {
-            model.addAttribute("assets", assetDao.getAllAssets());
+            model.addAttribute("assets", assetService.getAllAssets());
                 model.addAttribute("portfolio", portfolio);
             return "editPortfolio";
         }
@@ -146,7 +147,7 @@ public class PortfolioController {
         violations = validate.validate(portfolio);
 
         if(violations.isEmpty()) {
-            portfolioDao.updatePortfolio(portfolio);
+            portfolioService.updatePortfolio(portfolio);
         }
 
         return "redirect:/portfolios";

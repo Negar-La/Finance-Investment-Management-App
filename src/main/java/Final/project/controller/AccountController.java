@@ -6,6 +6,9 @@ import Final.project.dao.UserDao;
 import Final.project.entities.Account;
 import Final.project.entities.Portfolio;
 import Final.project.entities.User;
+import Final.project.service.AccountService;
+import Final.project.service.PortfolioService;
+import Final.project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,20 +29,20 @@ import java.util.Set;
 @Controller
 public class AccountController {
     @Autowired
-    UserDao userDao;
+    UserService userService;
 
     @Autowired
-    AccountDao accountDao;
+    AccountService accountService;
 
     @Autowired
-    PortfolioDao portfolioDao;
+    PortfolioService portfolioService;
 
     Set<ConstraintViolation<Account>> violations = new HashSet<>();
     @GetMapping("accounts")
     public String displayAccounts(Model model) {
-        List<User> users = userDao.getAllUsers();
-        List<Account> accounts = accountDao.getAllAccounts();
-        List<Portfolio> portfolios = portfolioDao.getAllPortfolios();
+        List<User> users = userService.getAllUsers();
+        List<Account> accounts = accountService.getAllAccounts();
+        List<Portfolio> portfolios = portfolioService.getAllPortfolios();
         model.addAttribute("users", users);
         model.addAttribute("accounts", accounts);
         model.addAttribute("portfolios", portfolios);
@@ -54,7 +57,7 @@ public class AccountController {
         List<Portfolio> portfolios = new ArrayList<>();
         if(portfolioIds != null) {
             for(String portfolioId: portfolioIds) {
-                portfolios.add(portfolioDao.getPortfolioById(Integer.parseInt(portfolioId)));
+                portfolios.add(portfolioService.getPortfolioById(Integer.parseInt(portfolioId)));
             }
         }
 
@@ -71,19 +74,19 @@ public class AccountController {
         violations = validate.validate(account);
 
         if(violations.isEmpty()) {
-            accountDao.addAccount(account);
+            accountService.addAccount(account);
         }
         return "redirect:/accounts";
     }
 
     @GetMapping("accountDetail")
     public String accountDetail(Integer id, Model model) {
-        Account account = accountDao.getAccountById(id);
+        Account account = accountService.getAccountById(id);
         model.addAttribute("account", account);
 
         // Fetch the associated User based on the userID stored in the Account
         int userId = account.getUserID();
-        User user = userDao.getUserById(userId);
+        User user = userService.getUserById(userId);
         model.addAttribute("user", user);
 
         return "accountDetail";
@@ -92,16 +95,16 @@ public class AccountController {
     @GetMapping("deleteAccount")
     public String deleteAccount(HttpServletRequest request) {
         int id = Integer.parseInt(request.getParameter("id"));
-        accountDao.deleteAccountById(id);
+        accountService.deleteAccountById(id);
 
         return "redirect:/accounts";
     }
 
     @GetMapping("editAccount")
     public String editAccount(Integer id, Model model) {
-        Account account = accountDao.getAccountById(id);
+        Account account = accountService.getAccountById(id);
 
-        List<Portfolio> portfolios = portfolioDao.getAllPortfolios();
+        List<Portfolio> portfolios = portfolioService.getAllPortfolios();
         //Need to setPower and setOrganizations to null so they match the members from getOrganizationByID()
         //so "${organization.members.contains(hero)}" will work!
         for(Portfolio portfolio: portfolios) {
@@ -132,7 +135,7 @@ public class AccountController {
 
 
         if(result.hasErrors()) {
-            model.addAttribute("portfolios", portfolioDao.getAllPortfolios());
+            model.addAttribute("portfolios", portfolioService.getAllPortfolios());
             model.addAttribute("account", account);
             return "editAccount";
         }
@@ -141,7 +144,7 @@ public class AccountController {
         violations = validate.validate(account);
 
         if(violations.isEmpty()) {
-            accountDao.updateAccount(account);
+            accountService.updateAccount(account);
         }
 
         return "redirect:/accounts";

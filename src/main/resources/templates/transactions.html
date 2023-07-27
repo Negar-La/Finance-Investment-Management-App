@@ -128,6 +128,8 @@
                     <th>Description</th>
                     <th>Portfolio</th>
                     <th>Asset</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -139,6 +141,8 @@
                     <td th:text="${transaction.description}">Description</td>
                     <td th:text="${transaction.portfolio.portfolioID}">Portfolio</td>
                     <td th:text="${transaction.asset.assetID}">Asset</td>
+                    <td><a href="#" th:href="@{/editTransaction(id=${transaction.transactionID})}">Edit</a></td>
+                    <td><a href="#" th:href="@{/deleteTransaction(id=${transaction.transactionID})}">Delete</a></td>
                 </tr>
                 </tbody>
             </table>
