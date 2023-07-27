@@ -75,6 +75,20 @@
                     </div>
                 </div>
 
+                <div class="form-group row">
+                    <label for="portfolios" class="col-3 col-form-label">
+                        Portfolios</label>
+                    <div class="col-9">
+                        <select multiple id="portfolios" name="id"
+                                class="form-control" >
+                            <option th:each="portfolio : ${portfolios}"
+                                    th:value="${portfolio.portfolioID}"
+                                    th:text="${portfolio.portfolioName}">
+                                Portfolio Name</option>
+                        </select>
+                    </div>
+                </div>
+
                 <button type="submit" class="btn btn-primary">Add Account</button>
             </form>
         </div>

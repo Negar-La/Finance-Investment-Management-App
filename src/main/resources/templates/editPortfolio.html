@@ -41,6 +41,20 @@
         </div>
         <div class="col-7 text-center m-3">
             <form action="editPortfolio" method="POST">
+
+                <div class="form-group row">
+                    <label for="accountID" class="col-3 col-form-label">Account ID</label>
+                    <div class="col-9">
+                        <input type="text" name="accountID" id="accountID" class="form-control"
+                               th:value="${portfolio.accountID}" />
+                        <div th:if="${#fields.hasErrors('portfolio.accountID')}">
+                            <p th:each="error : ${#fields.errors('portfolio.accountID')}"
+                               class="alert alert-danger" th:text="${error}">
+                                Bad account ID </p>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="form-group row">
                     <label for="portfolioName" class="col-3 col-form-label">Portfolio Name</label>
                     <div class="col-9">
@@ -55,15 +69,15 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="heroes" class="col-3 col-form-label">Heroes</label>
+                    <label for="assets" class="col-3 col-form-label">Assets</label>
                     <div class="col-9">
 
-                        <select multiple id="heroes" name="assetIds" class="form-control">
+                        <select multiple id="assets" name="assetIds" class="form-control">
                             <option th:each="asset : ${assets}"
                                     th:value="${asset.assetID}"
                                     th:text="${asset.assetName}"
                                     th:selected="${portfolio.assets.contains(asset)}">
-                                Hero Name</option>
+                                Asset Name</option>
                         </select>
                         <div th:if="${#fields.hasErrors('portfolio.assets')}">
                             <p th:each="error : ${#fields.errors('portfolio.assets')}"
