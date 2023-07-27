@@ -1,9 +1,14 @@
 package Final.project.controller;
 
 import Final.project.dao.AccountDao;
+import Final.project.dao.TransactionDao;
 import Final.project.dao.UserDao;
 import Final.project.entities.Account;
+import Final.project.entities.Transaction;
 import Final.project.entities.User;
+import Final.project.service.AccountService;
+import Final.project.service.TransactionService;
+import Final.project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,16 +31,19 @@ import java.util.Set;
 public class UserController {
 
     @Autowired
-    UserDao userDao;
+    UserService userService;
 
     @Autowired
-    AccountDao accountDao;
+    AccountService accountService;
+
+    @Autowired
+    TransactionService transactionService;
 
     Set<ConstraintViolation<User>> violations = new HashSet<>();
     @GetMapping("users")
     public String displayUsers(Model model) {
-        List<User> users = userDao.getAllUsers();
-        List<Account> accounts = accountDao.getAllAccounts();
+        List<User> users = userService.getAllUsers();
+        List<Account> accounts = accountService.getAllAccounts();
         model.addAttribute("users", users);
         model.addAttribute("accounts", accounts);
         model.addAttribute("errors", violations);
@@ -49,7 +57,7 @@ public class UserController {
         List<Account> accounts = new ArrayList<>();
         if(accountIds != null) {
             for(String accountId: accountIds) {
-                accounts.add(accountDao.getAccountById(Integer.parseInt(accountId)));
+                accounts.add(accountService.getAccountById(Integer.parseInt(accountId)));
             }
         }
 
@@ -68,30 +76,32 @@ public class UserController {
         violations = validate.validate(user);
 
         if(violations.isEmpty()) {
-            userDao.addUser(user);
+            userService.addUser(user);
         }
         return "redirect:/users";
     }
 
     @GetMapping("userDetail")
     public String userDetail(Integer id, Model model) {
-        User user = userDao.getUserById(id);
+        User user = userService.getUserById(id);
+        List<Transaction> transactions = transactionService.getTransactionsByUserId(id);
         model.addAttribute("user", user);
+        model.addAttribute("transactions", transactions);
         return "userDetail";
     }
 
     @GetMapping("deleteUser")
     public String deleteUser(HttpServletRequest request) {
         int id = Integer.parseInt(request.getParameter("id"));
-        userDao.deleteUserById(id);
+        userService.deleteUserById(id);
 
         return "redirect:/users";
     }
 
     @GetMapping("editUser")
     public String editUser(Integer id, Model model) {
-        User user = userDao.getUserById(id);
-        List<Account> accounts = accountDao.getAllAccounts();
+        User user = userService.getUserById(id);
+        List<Account> accounts = accountService.getAllAccounts();
         //Need to setPower and setOrganizations to null so they match the members from getOrganizationByID()
         //so "${organization.members.contains(hero)}" will work!
         for(Account account: accounts) {
@@ -122,7 +132,7 @@ public class UserController {
 
 
         if(result.hasErrors()) {
-            model.addAttribute("accounts", accountDao.getAllAccounts());
+            model.addAttribute("accounts", accountService.getAllAccounts());
                 model.addAttribute("user", user);
             return "editUser";
         }
@@ -131,7 +141,7 @@ public class UserController {
         violations = validate.validate(user);
 
         if(violations.isEmpty()) {
-            userDao.updateUser(user);
+            userService.updateUser(user);
         }
 
         return "redirect:/users";

@@ -67,6 +67,33 @@
 
     </div>
 
+    <!-- Transactions Table -->
+    <div class="row m-4 border border-dark">
+        <div class="col-12">
+            <h2 class="text-center">Transactions</h2>
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>Transaction ID</th>
+                    <th>Amount</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="transaction : ${transactions}">
+                    <td th:text="${transaction.transactionID}">Transaction ID</td>
+                    <td th:text="${transaction.amount}">Amount</td>
+                    <td th:text="${transaction.transactionType}">Type</td>
+                    <td th:text="${transaction.description}">Description</td>
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- End Transactions Table -->
+
     <div class="container bg-light">
         <div class="col-md-12 text-center">
             <button type="button" class="btn btn-primary"><a class="btn btn-primary" href="users" role="button">Go Back</a></button>

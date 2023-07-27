@@ -8,6 +8,10 @@ import Final.project.entities.Account;
 import Final.project.entities.Asset;
 import Final.project.entities.Portfolio;
 import Final.project.entities.User;
+import Final.project.service.AccountService;
+import Final.project.service.AssetService;
+import Final.project.service.PortfolioService;
+import Final.project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,25 +32,25 @@ import java.util.Set;
 @Controller
 public class AssetController {
     @Autowired
-    UserDao userDao;
+    UserService userService;
 
     @Autowired
-    AccountDao accountDao;
+    AccountService accountService;
 
     @Autowired
-    PortfolioDao portfolioDao;
+    PortfolioService portfolioService;
 
     @Autowired
-    AssetDao assetDao;
+    AssetService assetService;
 
     Set<ConstraintViolation<Asset>> violations = new HashSet<>();
 
     @GetMapping("assets")
     public String displayAssets(Model model) {
-        List<User> users = userDao.getAllUsers();
-        List<Account> accounts = accountDao.getAllAccounts();
-        List<Portfolio> portfolios = portfolioDao.getAllPortfolios();
-        List<Asset> assets = assetDao.getAllAssets();
+        List<User> users = userService.getAllUsers();
+        List<Account> accounts = accountService.getAllAccounts();
+        List<Portfolio> portfolios = portfolioService.getAllPortfolios();
+        List<Asset> assets = assetService.getAllAssets();
         model.addAttribute("users", users);
         model.addAttribute("accounts", accounts);
         model.addAttribute("portfolios", portfolios);
@@ -78,7 +82,7 @@ public class AssetController {
         violations = validate.validate(asset);
 
         if(violations.isEmpty()) {
-            assetDao.addAsset(asset);
+            assetService.addAsset(asset);
         }
         return "redirect:/assets";
     }
@@ -86,14 +90,14 @@ public class AssetController {
     @GetMapping("deleteAsset")
     public String deleteAsset(HttpServletRequest request) {
         int id = Integer.parseInt(request.getParameter("id"));
-        assetDao.deleteAssetById(id);
+        assetService.deleteAssetById(id);
 
         return "redirect:/assets";
     }
 
     @GetMapping("editAsset")
     public String editAsset(Integer id, Model model) {
-        Asset asset = assetDao.getAssetById(id);
+        Asset asset = assetService.getAssetById(id);
 
         model.addAttribute("asset", asset);
         return "editAsset";
@@ -111,7 +115,7 @@ public class AssetController {
         violations = validate.validate(asset);
 
         if(violations.isEmpty()) {
-            assetDao.updateAsset(asset);
+            assetService.updateAsset(asset);
         }
 
         return "redirect:/assets";
