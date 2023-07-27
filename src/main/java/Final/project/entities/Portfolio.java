@@ -1,17 +1,18 @@
 package Final.project.entities;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.util.List;
 import java.util.Objects;
 
 public class Portfolio {
     private int portfolioID;
-    @NotBlank(message = "Account Type must not be blank")
-    @Size(max = 45, message="Account Type must be fewer than 45 characters")
+    @NotBlank(message = "Portfolio Name must not be blank")
+    @Size(max = 45, message="Portfolio Name must be fewer than 45 characters")
     private String portfolioName;
     //private int accountID; // Foreign key to associate the portfolio with the account
-
+    @Positive(message = "Account ID must be a positive number")
     private int accountID; // Foreign key to associate the portfolio with the account
     private List<Asset> assets;
 

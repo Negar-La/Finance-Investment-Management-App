@@ -8,14 +8,14 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-    <title>Account Details</title>
+    <title>Portfolio Details</title>
 </head>
 <body>
 <!-- Main Body of Page -->
 <div class="container">
     <div class="row m-4">
         <div class="col text-center border border-dark">
-            <h1><a href="/" class="text-dark">Account Details</a></h1>
+            <h1><a href="/" class="text-dark">Portfolio Details</a></h1>
         </div>
     </div>
     <div class="row m-3 border border-dark">
@@ -37,16 +37,6 @@
     </div>
     <div class="row m-4 border border-dark">
 
-        <div class="col-6 text-right"><strong>User</strong></div>
-        <div class="col-6 text-left">
-            <span th:text="${user.firstName + ' ' + user.lastName}">display name</span>
-        </div>
-
-        <div class="col-6 text-right"><strong>Account ID</strong></div>
-        <div class="col-6 text-left">
-            <span th:text="${account.accountID}">display id</span>
-        </div>
-
         <div class="col-6 text-right"><strong>Account Name</strong></div>
         <div class="col-6 text-left">
             <span th:text="${account.accountName}">display name</span>
@@ -57,12 +47,22 @@
             <span th:text="${account.accountType}">display type</span>
         </div>
 
-
-        <div class="col-6 text-right"><strong>Portfolios</strong></div>
+        <div class="col-6 text-right"><strong>Account ID</strong></div>
         <div class="col-6 text-left">
-                    <span th:each="portfolio : ${account.portfolios}">
-                        <span th:text="${portfolio.portfolioName}">
-                            display portfolio</span><br/>
+            <span th:text="${account.accountID}">display id</span>
+        </div>
+
+        <div class="col-6 text-right"><strong>Portfolio Name</strong></div>
+        <div class="col-6 text-left">
+            <span th:text="${portfolio.portfolioName}">display name</span>
+        </div>
+
+
+        <div class="col-6 text-right"><strong>Assets</strong></div>
+        <div class="col-6 text-left">
+                    <span th:each="asset : ${portfolio.assets}">
+                        <span th:text="${asset.assetName}">
+                            display asset</span><br/>
                     </span>
         </div>
 
@@ -70,7 +70,7 @@
 
     <div class="container bg-light">
         <div class="col-md-12 text-center">
-            <button type="button" class="btn btn-primary"><a class="btn btn-primary" href="accounts" role="button">Go Back</a></button>
+            <button type="button" class="btn btn-primary"><a class="btn btn-primary" href="portfolios" role="button">Go Back</a></button>
         </div>
     </div>
 
