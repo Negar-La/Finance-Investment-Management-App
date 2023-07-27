@@ -1,10 +1,16 @@
 package Final.project.entities;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 
 public class Asset {
     private int assetID;
+    @NotBlank(message = "Asset Name must not be blank")
+    @Size(max = 45, message="Asset Name must be fewer than 45 characters")
     private String assetName;
+    @NotBlank(message = "Asset Type must not be blank")
+    @Size(max = 45, message="Asset Type must be fewer than 45 characters")
     private String assetType;
 
     // Constructors, getters, setters, and other methods
