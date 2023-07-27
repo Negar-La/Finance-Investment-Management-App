@@ -1,5 +1,6 @@
 package Final.project.dao;
 
+import Final.project.entities.Asset;
 import Final.project.entities.Transaction;
 
 import java.util.List;
