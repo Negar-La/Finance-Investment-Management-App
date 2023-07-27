@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -52,7 +53,7 @@ public class AccountController {
 
     @PostMapping("addAccount")
     public String addAccount(HttpServletRequest request) {
-        String[] portfolioIds = request.getParameterValues("portfolioID");
+        String[] portfolioIds = request.getParameterValues("id");
 
         List<Portfolio> portfolios = new ArrayList<>();
         if(portfolioIds != null) {
@@ -69,6 +70,7 @@ public class AccountController {
         account.setUserID(Integer.parseInt(userId));
         account.setAccountName(accountName);
         account.setAccountType(accountType);
+        account.setPortfolios(portfolios);
 
         Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
         violations = validate.validate(account);
@@ -105,11 +107,7 @@ public class AccountController {
         Account account = accountService.getAccountById(id);
 
         List<Portfolio> portfolios = portfolioService.getAllPortfolios();
-        //Need to setPower and setOrganizations to null so they match the members from getOrganizationByID()
-        //so "${organization.members.contains(hero)}" will work!
-        for(Portfolio portfolio: portfolios) {
 
-        }
         model.addAttribute("account", account);
         model.addAttribute("portfolios", portfolios);
         return "editAccount";
@@ -118,20 +116,19 @@ public class AccountController {
     @PostMapping("editAccount")
     public String performEditAccount(@Valid Account account, BindingResult result, HttpServletRequest request, Model model) {
 
-//        String[] accountIds = request.getParameterValues("accountIds");
-//
-//        List<Account> accounts = new ArrayList<>();
-//        if(accountIds != null) {
-//            for(String heroId : accountIds) {
-//                accounts.add(accountDao.getAccountById(Integer.parseInt(heroId)));
-//            }
-//            user.setAccounts(accounts);
-//        }
-//        else {
-//            FieldError error = new FieldError("user", "accounts", "Must include one account");
-//            result.addError(error);
-//        }
+        String[] portfolioIds = request.getParameterValues("portfolioIds");
 
+        List<Portfolio> portfolios = new ArrayList<>();
+        if(portfolioIds != null) {
+            for(String portfolioId : portfolioIds) {
+                portfolios.add(portfolioService.getPortfolioById(Integer.parseInt(portfolioId)));
+            }
+            account.setPortfolios(portfolios);
+        }
+        else {
+            FieldError error = new FieldError("account", "portfolio", "Must include one portfolio");
+            result.addError(error);
+        }
 
 
         if(result.hasErrors()) {

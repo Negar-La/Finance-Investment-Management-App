@@ -126,13 +126,36 @@ public class UserDaoDB implements UserDao{
                 jdbc.update(UPDATE_USER_ACCOUNTS, account.getAccountName(), account.getAccountType(), account.getAccountID(), user.getUserID());
             }
         }
-
     }
 
     @Override
     public void deleteUserById(int id) {
         try {
-            // Delete user's accounts from the Account table first
+            // Get the list of account IDs associated with the user
+            final String GET_ACCOUNT_IDS = "SELECT AccountID FROM Account WHERE UserID = ?";
+            List<Integer> accountIds = jdbc.queryForList(GET_ACCOUNT_IDS, Integer.class, id);
+
+            for (int accountId : accountIds) {
+                // Get the list of portfolio IDs associated with the account
+                final String GET_PORTFOLIO_IDS = "SELECT PortfolioID FROM Portfolio WHERE AccountID = ?";
+                List<Integer> portfolioIds = jdbc.queryForList(GET_PORTFOLIO_IDS, Integer.class, accountId);
+
+                for (int portfolioId : portfolioIds) {
+                    // Delete transactions associated with the portfolio
+                    final String DELETE_TRANSACTIONS = "DELETE FROM Transaction WHERE PortfolioID = ?";
+                    jdbc.update(DELETE_TRANSACTIONS, portfolioId);
+
+                    // Delete records from portfolio_asset associated with the portfolio
+                    final String DELETE_PORTFOLIO_ASSET = "DELETE FROM Portfolio_Asset WHERE PortfolioID = ?";
+                    jdbc.update(DELETE_PORTFOLIO_ASSET, portfolioId);
+                }
+
+                // Delete portfolios associated with the account
+                final String DELETE_PORTFOLIOS = "DELETE FROM Portfolio WHERE AccountID = ?";
+                jdbc.update(DELETE_PORTFOLIOS, accountId);
+            }
+
+            // Delete user's accounts from the Account table
             final String DELETE_USER_ACCOUNTS = "DELETE FROM Account WHERE UserID = ?";
             jdbc.update(DELETE_USER_ACCOUNTS, id);
 
@@ -142,6 +165,7 @@ public class UserDaoDB implements UserDao{
 
         } catch (DataAccessException ex) {
             // Handle exception if needed
+            ex.printStackTrace();
         }
     }
 
