@@ -17,11 +17,19 @@ public class Account {
     private String accountType;
 
     //private User user;
-    @Positive(message = "User ID must be a positive number")
     private int userID; // Foreign key to associate the account with the user
     private List<Portfolio> portfolios; // Composition: Account has multiple Portfolios
 
     // Constructor, getters, setters, and other methods
+    private int selectedUserId; // New field to store the selected teacher's ID
+
+    public int selectedUserId() {
+        return selectedUserId;
+    }
+
+    public void selectedUserId(int selectedUserId) {
+        this.selectedUserId = selectedUserId;
+    }
 
     public int getAccountID() {
         return accountID;

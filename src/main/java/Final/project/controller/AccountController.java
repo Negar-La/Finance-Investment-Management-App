@@ -44,6 +44,13 @@ public class AccountController {
         List<User> users = userService.getAllUsers();
         List<Account> accounts = accountService.getAllAccounts();
         List<Portfolio> portfolios = portfolioService.getAllPortfolios();
+
+        // Set the selectedTeacherId for each Course based on the Teacher object
+        for (Account account : accounts) {
+            int userId = account.getUserID();
+            account.selectedUserId(userId);
+        }
+
         model.addAttribute("users", users);
         model.addAttribute("accounts", accounts);
         model.addAttribute("portfolios", portfolios);
@@ -52,8 +59,11 @@ public class AccountController {
     }
 
     @PostMapping("addAccount")
-    public String addAccount(HttpServletRequest request) {
+    public String addAccount(Account account, HttpServletRequest request) {
         String[] portfolioIds = request.getParameterValues("id");
+        String userId = request.getParameter("userId");
+
+        account.setUserID(Integer.parseInt(userId));
 
         List<Portfolio> portfolios = new ArrayList<>();
         if(portfolioIds != null) {
@@ -62,14 +72,14 @@ public class AccountController {
             }
         }
 
-        String userId = request.getParameter("accountUserID");
-        String accountName = request.getParameter("accountName");
-        String accountType = request.getParameter("accountType");
-
-        Account account = new Account();
-        account.setUserID(Integer.parseInt(userId));
-        account.setAccountName(accountName);
-        account.setAccountType(accountType);
+//        String userId = request.getParameter("accountUserID");
+//        String accountName = request.getParameter("accountName");
+//        String accountType = request.getParameter("accountType");
+//
+//        Account account = new Account();
+//        account.setUserID(Integer.parseInt(userId));
+//        account.setAccountName(accountName);
+//        account.setAccountType(accountType);
         account.setPortfolios(portfolios);
 
         Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
@@ -107,9 +117,11 @@ public class AccountController {
         Account account = accountService.getAccountById(id);
 
         List<Portfolio> portfolios = portfolioService.getAllPortfolios();
+        List<User> users = userService.getAllUsers();
 
         model.addAttribute("account", account);
         model.addAttribute("portfolios", portfolios);
+        model.addAttribute("users", users);
         return "editAccount";
     }
 
@@ -117,6 +129,9 @@ public class AccountController {
     public String performEditAccount(@Valid Account account, BindingResult result, HttpServletRequest request, Model model) {
 
         String[] portfolioIds = request.getParameterValues("portfolioIds");
+        String userId = request.getParameter("userId");
+
+        account.setUserID(Integer.parseInt(userId));
 
         List<Portfolio> portfolios = new ArrayList<>();
         if(portfolioIds != null) {
@@ -133,6 +148,7 @@ public class AccountController {
 
         if(result.hasErrors()) {
             model.addAttribute("portfolios", portfolioService.getAllPortfolios());
+            model.addAttribute("users", userService.getAllUsers());
             model.addAttribute("account", account);
             return "editAccount";
         }

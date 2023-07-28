@@ -94,6 +94,52 @@
     </div>
     <!-- End Transactions Table -->
 
+    <!-- Portfolios and Assets Table -->
+    <div class="col-6 text-right"><strong>Accounts</strong></div>
+    <div class="col-6 text-left">
+    <span th:each="account : ${user.accounts}">
+        <span th:text="${account.accountName}">
+            display account</span><br/>
+
+        <!-- Check if the account has portfolios -->
+        <span th:if="${account.portfolios}">
+            <!-- Display Portfolios for each Account -->
+            <span th:each="portfolio : ${account.portfolios}">
+                <span th:text="${portfolio.portfolioName}">
+                    display portfolio</span><br/>
+
+                <!-- Check if the portfolio has assets -->
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Asset Name</th>
+                            <th>Asset Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:if="${portfolio.assets}" th:each="asset : ${portfolio.assets}">
+                            <td th:text="${asset.assetName}">Asset Name</td>
+                            <td th:text="${asset.assetType}">Asset Type</td>
+                        </tr>
+                        <!-- Handle case where portfolio has no assets -->
+                        <tr th:if="${not portfolio.assets}">
+                            <td colspan="2">No assets found for this portfolio.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </span>
+        </span>
+
+        <!-- Handle case where account has no portfolios -->
+        <span th:unless="${account.portfolios}">
+            No portfolios found for this account.
+        </span>
+
+    </span>
+    </div>
+    <!-- End Portfolios and Assets Table -->
+
+
     <div class="container bg-light">
         <div class="col-md-12 text-center">
             <button type="button" class="btn btn-primary"><a class="btn btn-primary" href="users" role="button">Go Back</a></button>

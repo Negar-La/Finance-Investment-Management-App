@@ -1,12 +1,12 @@
 package Final.project.controller;
 
 import Final.project.dao.AccountDao;
+import Final.project.dao.PortfolioDao;
 import Final.project.dao.TransactionDao;
 import Final.project.dao.UserDao;
-import Final.project.entities.Account;
-import Final.project.entities.Transaction;
-import Final.project.entities.User;
+import Final.project.entities.*;
 import Final.project.service.AccountService;
+import Final.project.service.PortfolioService;
 import Final.project.service.TransactionService;
 import Final.project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +38,9 @@ public class UserController {
 
     @Autowired
     TransactionService transactionService;
+
+    @Autowired
+    PortfolioService portfolioService;
 
     Set<ConstraintViolation<User>> violations = new HashSet<>();
     @GetMapping("users")
@@ -85,8 +88,19 @@ public class UserController {
     public String userDetail(Integer id, Model model) {
         User user = userService.getUserById(id);
         List<Transaction> transactions = transactionService.getTransactionsByUserId(id);
+        List<Account> accounts = accountService.getAccountsByUserId(id);
+        // For each account, fetch portfolios and assets
+        for (Account account : accounts) {
+            List<Portfolio> portfolios = portfolioService.getPortfoliosByUserId(user.getUserID());
+            account.setPortfolios(portfolios);
+            for (Portfolio portfolio : portfolios) {
+                List<Asset> assets = portfolioService.getAssetsForPortfolio(portfolio.getPortfolioID());
+                portfolio.setAssets(assets);
+            }
+        }
         model.addAttribute("user", user);
         model.addAttribute("transactions", transactions);
+        model.addAttribute("accounts", accounts);
         return "userDetail";
     }
 

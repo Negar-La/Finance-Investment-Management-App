@@ -48,14 +48,30 @@
         </div>
         <div class="col-7 text-center m-3">
             <form action="addAccount" method="POST">
+<!--                <div class="form-group row">-->
+<!--                    <label for="accountUserID" class="col-3 col-form-label">-->
+<!--                        Enter User ID</label>-->
+<!--                    <div class="col-9">-->
+<!--                        <input type="number" name="accountUserID"-->
+<!--                               id="accountUserID" class="form-control"/>-->
+<!--                    </div>-->
+<!--                </div>-->
+
                 <div class="form-group row">
                     <label for="accountUserID" class="col-3 col-form-label">
-                        Enter User ID</label>
+                        User Name</label>
                     <div class="col-9">
-                        <input type="number" name="accountUserID"
-                               id="accountUserID" class="form-control"/>
+                        <select id="accountUserID" name="userId" class="form-control" >
+                            <option th:each="user : ${users}"
+                                    th:value="${user.userID}"
+                                    th:text="${user.firstName + ' '
+                                                + user.lastName}">
+                                User Name</option>
+                        </select>
                     </div>
                 </div>
+
+
 
                 <div class="form-group row">
                     <label for="accountName" class="col-3 col-form-label">
@@ -102,7 +118,7 @@
                     <th>Account ID</th>
                     <th>Account Name</th>
                     <th>Account Type</th>
-                    <th>User ID</th>
+                    <th>User Name</th>
                     <th>Details</th>
                     <th>Edit</th>
                     <th>Delete</th>
@@ -112,8 +128,14 @@
                 <tr th:each="account : ${accounts}">
                     <td th:text="${account.accountID}">User ID</td>
                     <td th:text="${account.accountName}">Account Name</td>
-                    <td th:text='${account.accountType}'>Account Type</td>
-                    <td th:text='${account.userID}'>User ID</td>
+                    <td th:text="${account.accountType}">Account Type</td>
+
+                    <td>
+                    <span th:each="user : ${users}" th:if="${user.userID == account.userID}">
+                        <span th:text="${user.firstName + ' ' + user.lastName}"></span><br/>
+                    </span>
+                    </td>
+
                     <td><a href="#" th:href="@{/accountDetail(id=${account.accountID})}">Details</a></td>
                     <td><a href="#" th:href="@{/editAccount(id=${account.accountID})}">Edit</a></td>
                     <td><a href="#" th:href="@{/deleteAccount(id=${account.accountID})}">Delete</a></td>
