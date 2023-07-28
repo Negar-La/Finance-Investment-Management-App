@@ -73,6 +73,7 @@ public class User {
         this.accounts = accounts;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -85,7 +86,7 @@ public class User {
         if (!lastName.equals(user.lastName)) return false;
         if (!email.equals(user.email)) return false;
         if (!phone.equals(user.phone)) return false;
-        return accounts.equals(user.accounts);
+        return Objects.equals(accounts, user.accounts);
     }
 
     @Override
@@ -95,20 +96,20 @@ public class User {
         result = 31 * result + lastName.hashCode();
         result = 31 * result + email.hashCode();
         result = 31 * result + phone.hashCode();
-        result = 31 * result + accounts.hashCode();
+        result = 31 * result + (accounts != null ? accounts.hashCode() : 0);
         return result;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "userID=" + userID +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
-                ", accounts=" + accounts +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "User{" +
+//                "userID=" + userID +
+//                ", firstName='" + firstName + '\'' +
+//                ", lastName='" + lastName + '\'' +
+//                ", email='" + email + '\'' +
+//                ", phone='" + phone + '\'' +
+//                ", accounts=" + accounts +
+//                '}';
+//    }
 }
 

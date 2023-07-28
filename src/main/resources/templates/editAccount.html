@@ -42,18 +42,33 @@
         <div class="col-7 text-center m-3">
             <form action="editAccount" method="POST">
 
+<!--                <div class="form-group row">-->
+<!--                    <label for="userID" class="col-3 col-form-label">User ID</label>-->
+<!--                    <div class="col-9">-->
+<!--                        <input type="text" name="userID" id="userID" class="form-control"-->
+<!--                               th:value="${account.userID}" />-->
+<!--                        <div th:if="${#fields.hasErrors('account.userID')}">-->
+<!--                            <p th:each="error : ${#fields.errors('account.userID')}"-->
+<!--                               class="alert alert-danger" th:text="${error}">-->
+<!--                                Bad User ID </p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+
                 <div class="form-group row">
-                    <label for="userID" class="col-3 col-form-label">User ID</label>
+                    <label for="user" class="col-3 col-form-label">User</label>
                     <div class="col-9">
-                        <input type="text" name="userID" id="userID" class="form-control"
-                               th:value="${account.userID}" />
-                        <div th:if="${#fields.hasErrors('account.userID')}">
-                            <p th:each="error : ${#fields.errors('account.userID')}"
-                               class="alert alert-danger" th:text="${error}">
-                                Bad User ID </p>
-                        </div>
+                        <select id="user" name="userId" class="form-control" >
+                            <option th:each="user : ${users}"
+                                    th:value="${user.userID}"
+                                    th:text="${user.firstName + ' ' + user.lastName}"
+                                    th:selected="${user.userID == account.userID}">
+                                user Name</option>
+                        </select>
                     </div>
                 </div>
+
 
                 <div class="form-group row">
                     <label for="accountName" class="col-3 col-form-label">Account Name</label>
@@ -88,8 +103,7 @@
                         <select multiple id="portfolios" name="portfolioIds" class="form-control">
                             <option th:each="portfolio : ${portfolios}"
                                     th:value="${portfolio.portfolioID}"
-                                    th:text="${portfolio.portfolioName}"
-                                    th:selected="${account.portfolios.contains(portfolio)}">
+                                    th:text="${portfolio.portfolioName}">
                                 Portfolio Name</option>
                         </select>
                         <div th:if="${#fields.hasErrors('account.portfolios')}">

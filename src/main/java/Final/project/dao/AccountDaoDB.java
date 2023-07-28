@@ -119,19 +119,34 @@ public class AccountDaoDB implements AccountDao{
 
     @Override
     public void deleteAccountById(int id) {
-        // Delete account's portfolios from the Portfolio_Asset table first
-        final String DELETE_ACCOUNT_PORTFOLIOS_ASSETS = "DELETE PA.* FROM Portfolio_Asset PA " +
-                "JOIN Portfolio P ON PA.PortfolioID = P.PortfolioID WHERE P.AccountID = ?";
-        jdbc.update(DELETE_ACCOUNT_PORTFOLIOS_ASSETS, id);
+        try {
+            // Get the list of portfolio IDs associated with the account
+            final String GET_PORTFOLIO_IDS = "SELECT PortfolioID FROM Portfolio WHERE AccountID = ?";
+            List<Integer> portfolioIds = jdbc.queryForList(GET_PORTFOLIO_IDS, Integer.class, id);
 
-        // Delete account's portfolios from the Portfolio table first
-        final String DELETE_ACCOUNT_PORTFOLIOS = "DELETE FROM Portfolio WHERE AccountID = ?";
-        jdbc.update(DELETE_ACCOUNT_PORTFOLIOS, id);
+            for (int portfolioId : portfolioIds) {
+                // Delete transactions associated with the portfolio
+                final String DELETE_TRANSACTIONS = "DELETE FROM Transaction WHERE PortfolioID = ?";
+                jdbc.update(DELETE_TRANSACTIONS, portfolioId);
 
-        // Delete the account from the Account table
-        final String DELETE_ACCOUNT = "DELETE FROM Account WHERE AccountID = ?";
-        jdbc.update(DELETE_ACCOUNT, id);
+                // Delete records from portfolio_asset associated with the portfolio
+                final String DELETE_PORTFOLIO_ASSET = "DELETE FROM Portfolio_Asset WHERE PortfolioID = ?";
+                jdbc.update(DELETE_PORTFOLIO_ASSET, portfolioId);
+            }
+
+            // Delete account's portfolios from the Portfolio table first
+            final String DELETE_ACCOUNT_PORTFOLIOS = "DELETE FROM Portfolio WHERE AccountID = ?";
+            jdbc.update(DELETE_ACCOUNT_PORTFOLIOS, id);
+
+            // Delete the account from the Account table
+            final String DELETE_ACCOUNT = "DELETE FROM Account WHERE AccountID = ?";
+            jdbc.update(DELETE_ACCOUNT, id);
+        } catch (DataAccessException ex) {
+            // Handle exception if needed
+            ex.printStackTrace();
+        }
     }
+
 
     @Override
     public List<Account> getAccountsByUserId(int userId) {
