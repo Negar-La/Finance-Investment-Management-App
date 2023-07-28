@@ -142,7 +142,7 @@
                     <td th:text="${transaction.portfolio.portfolioName}">Portfolio</td>
                     <td th:text="${transaction.asset.assetName}">Asset</td>
                     <td><a href="#" th:href="@{/editTransaction(id=${transaction.transactionID})}">Edit</a></td>
-                    <td><a href="#" th:href="@{/deleteTransaction(id=${transaction.transactionID})}">Delete</a></td>
+                    <td><a href="#" class="btn btn-danger btn-sm"  th:href="@{/deleteTransaction(id=${transaction.transactionID})}">Delete</a></td>
                 </tr>
                 </tbody>
             </table>

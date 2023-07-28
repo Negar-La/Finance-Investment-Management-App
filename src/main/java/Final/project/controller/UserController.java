@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -112,7 +113,7 @@ public class UserController {
 
 
 
-    @GetMapping("deleteUser")
+    @PostMapping("deleteUser")
     public String deleteUser(HttpServletRequest request) {
         int id = Integer.parseInt(request.getParameter("id"));
         userService.deleteUserById(id);
@@ -124,8 +125,6 @@ public class UserController {
     public String editUser(Integer id, Model model) {
         User user = userService.getUserById(id);
         List<Account> accounts = accountService.getAllAccounts();
-        //Need to setPower and setOrganizations to null so they match the members from getOrganizationByID()
-        //so "${organization.members.contains(hero)}" will work!
         for(Account account: accounts) {
 
         }
