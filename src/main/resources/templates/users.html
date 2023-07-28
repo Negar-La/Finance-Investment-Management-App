@@ -8,12 +8,15 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+
     <title>Personal Finance and Investment Management Application</title>
 </head>
 <body>
 <!-- Main Body of Page -->
 <div class="container">
-    <div class="row m-4">
+    <div class="row m-4 header">
         <div class="col text-center border border-dark">
             <h1><a href="/" class="text-dark">Personal Finance and Investment Management Application</a></h1>
         </div>
@@ -35,7 +38,7 @@
             <a href="transactions" class="btn btn-outline-primary btn-lg">Transactions</a>
         </div>
     </div>
-    <div class="row m-4 border border-dark">
+    <div class="row m-4 border border-dark add-user">
 
         <div class="col-12 m-1 text-center"
              th:if="${!errors.isEmpty()}">
@@ -155,7 +158,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
-
 <!-- JavaScript to handle the delete action -->
 <script>
     $(document).ready(function () {
@@ -164,7 +166,7 @@
             // Get the user ID from the data-user-id attribute
             const userId = $(this).data('user-id');
             // Set the form action with the user ID to delete
-          if (typeof userId !== 'undefined') {
+            if (typeof userId !== 'undefined') {
                 $('#deleteUserForm').attr('action', '/deleteUser?id=' + userId);
             }
         });
@@ -172,4 +174,4 @@
 </script>
 
 </body>
-</html>;
+</html>
