@@ -78,6 +78,8 @@
                     <th>Amount</th>
                     <th>Type</th>
                     <th>Description</th>
+                    <th>Portfolio Name</th>
+                    <th>Asset Name</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -86,7 +88,8 @@
                     <td th:text="${transaction.amount}">Amount</td>
                     <td th:text="${transaction.transactionType}">Type</td>
                     <td th:text="${transaction.description}">Description</td>
-
+                    <td th:text="${transaction.portfolio.portfolioName}">Portfolio Name</td>
+                    <td th:text="${transaction.asset.assetName}">Asset Name</td>
                 </tr>
                 </tbody>
             </table>
