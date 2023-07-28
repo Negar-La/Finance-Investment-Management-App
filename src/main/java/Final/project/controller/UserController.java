@@ -87,22 +87,30 @@ public class UserController {
     @GetMapping("userDetail")
     public String userDetail(Integer id, Model model) {
         User user = userService.getUserById(id);
-        List<Transaction> transactions = transactionService.getTransactionsByUserId(id);
-        List<Account> accounts = accountService.getAccountsByUserId(id);
-        // For each account, fetch portfolios and assets
-        for (Account account : accounts) {
-            List<Portfolio> portfolios = portfolioService.getPortfoliosByUserId(user.getUserID());
-            account.setPortfolios(portfolios);
-            for (Portfolio portfolio : portfolios) {
-                List<Asset> assets = portfolioService.getAssetsForPortfolio(portfolio.getPortfolioID());
-                portfolio.setAssets(assets);
+        if (user != null) {
+            List<Transaction> transactions = transactionService.getTransactionsByUserId(id);
+
+            if (user.getAccounts() != null) {
+                List<Portfolio> portfolios;
+
+                // For each account, fetch portfolios and assets
+                for (Account account : user.getAccounts()) {
+                    portfolios = portfolioService.getPortfoliosByUserId(user.getUserID());
+                    account.setPortfolios(portfolios);
+                }
             }
+
+            model.addAttribute("user", user);
+            model.addAttribute("transactions", transactions);
+            return "userDetail";
+        } else {
+            // Handle the case where the user is null
+            // For example, you can show an error message or redirect to a different page
+            return "error";
         }
-        model.addAttribute("user", user);
-        model.addAttribute("transactions", transactions);
-        model.addAttribute("accounts", accounts);
-        return "userDetail";
     }
+
+
 
     @GetMapping("deleteUser")
     public String deleteUser(HttpServletRequest request) {

@@ -21,15 +21,7 @@ public class Account {
     private List<Portfolio> portfolios; // Composition: Account has multiple Portfolios
 
     // Constructor, getters, setters, and other methods
-    private int selectedUserId; // New field to store the selected teacher's ID
 
-    public int selectedUserId() {
-        return selectedUserId;
-    }
-
-    public void selectedUserId(int selectedUserId) {
-        this.selectedUserId = selectedUserId;
-    }
 
     public int getAccountID() {
         return accountID;
@@ -69,6 +61,16 @@ public class Account {
 
     public void setUserID(int userID) {
         this.userID = userID;
+    }
+
+    private int selectedUserId; // New field to store the selected user's ID
+
+    public int selectedUserId() {
+        return selectedUserId;
+    }
+
+    public void selectedUserId(int selectedUserId) {
+        this.selectedUserId = selectedUserId;
     }
 
     @Override
