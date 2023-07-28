@@ -111,8 +111,6 @@ public class UserController {
         }
     }
 
-
-
     @PostMapping("deleteUser")
     public String deleteUser(HttpServletRequest request) {
         int id = Integer.parseInt(request.getParameter("id"));
@@ -135,23 +133,6 @@ public class UserController {
 
     @PostMapping("editUser")
     public String performEditUser(@Valid User user, BindingResult result, HttpServletRequest request, Model model) {
-
-//        String[] accountIds = request.getParameterValues("accountIds");
-//
-//        List<Account> accounts = new ArrayList<>();
-//        if(accountIds != null) {
-//            for(String heroId : accountIds) {
-//                accounts.add(accountDao.getAccountById(Integer.parseInt(heroId)));
-//            }
-//            user.setAccounts(accounts);
-//        }
-//        else {
-//            FieldError error = new FieldError("user", "accounts", "Must include one account");
-//            result.addError(error);
-//        }
-
-
-
         if(result.hasErrors()) {
             model.addAttribute("accounts", accountService.getAllAccounts());
                 model.addAttribute("user", user);
