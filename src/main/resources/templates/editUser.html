@@ -96,32 +96,10 @@
                     </div>
                 </div>
 
-<!--                <div class="form-group row">-->
-<!--                    <label for="accounts" class="col-3 col-form-label">Accounts</label>-->
-<!--                    <div class="col-9">-->
-
-<!--                        &lt;!&ndash;                 name should be unique!   name="heroIds"    &ndash;&gt;-->
-<!--                        <select multiple id="accounts" name="accountIds" class="form-control">-->
-<!--                            <option th:each="account : ${accounts}"-->
-<!--                                    th:value="${account.accountID}"-->
-<!--                                    th:text="${account.accountName}"-->
-<!--                                    th:selected="${user.accounts.contains(account)}">-->
-<!--                                Account Name</option>-->
-<!--                        </select>-->
-<!--                        <div th:if="${#fields.hasErrors('user.accounts')}">-->
-<!--                            <p th:each="error : ${#fields.errors('user.accounts')}"-->
-<!--                               class="alert alert-danger" th:text="${error}">-->
-<!--                                Bad account </p>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-                <!--     When we work on the back-end, we use the name attribute to grab the data from the fields. name should be unique!   name="id"    -->
                 <input type="hidden" name="userID" th:value="${user.userID}"/>
                 <button type="submit" class="btn btn-primary">Edit User</button>
                 <button type="button" class="btn btn-light"><a href="users">Cancel</a></button>
-
-
-
+                
             </form>
         </div>
     </div>
