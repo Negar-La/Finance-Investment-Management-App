@@ -107,7 +107,7 @@
                     <td th:text='${portfolio.accountID}'>Account ID</td>
                     <td><a href="#" th:href="@{/portfolioDetail(id=${portfolio.portfolioID})}">Details</a></td>
                     <td><a href="#" th:href="@{/editPortfolio(id=${portfolio.portfolioID})}">Edit</a></td>
-                    <td><a href="#" th:href="@{/deletePortfolio(id=${portfolio.portfolioID})}">Delete</a></td>
+                    <td><a href="#" class="btn btn-danger btn-sm" th:href="@{/deletePortfolio(id=${portfolio.portfolioID})}">Delete</a></td>
                 </tr>
                 </tbody>
             </table>
