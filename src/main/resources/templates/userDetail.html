@@ -8,17 +8,20 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
+    <!-- External CSS -->
+    <link rel="stylesheet" href="editUserStyles.css">
+
     <title>User Details</title>
 </head>
 <body>
 <!-- Main Body of Page -->
 <div class="container">
-    <div class="row m-4">
+    <div class="row m-4 header">
         <div class="col text-center border border-dark">
             <h1><a href="/" class="text-dark">User Details</a></h1>
         </div>
     </div>
-    <div class="row m-3 border border-dark">
+    <div class="row m-3 navigation">
         <div class="col text-center m-3">
             <a href="users" class="btn btn-outline-primary btn-lg">Users</a>
         </div>
@@ -35,7 +38,7 @@
             <a href="transactions" class="btn btn-outline-primary btn-lg">Transactions</a>
         </div>
     </div>
-    <div class="row m-4 border border-dark">
+    <div class="row m-4 border border-dark details">
         <div class="col-6 text-right"><strong>User ID</strong></div>
         <div class="col-6 text-left">
             <span th:text="${user.userID}">display id</span>
@@ -56,19 +59,17 @@
             <span th:text="${user.phone}">display Phone</span>
         </div>
 
-
         <div class="col-6 text-right"><strong>Accounts</strong></div>
         <div class="col-6 text-left">
-                    <span th:each="account : ${user.accounts}">
-                        <span th:text="${account.accountName}">
-                            display account</span><br/>
-                    </span>
+            <span th:each="account : ${user.accounts}">
+                <span th:text="${account.accountName}">
+                    display account</span><br/>
+            </span>
         </div>
-
     </div>
 
     <!-- Transactions Table -->
-    <div class="row m-4 border border-dark">
+    <div class="row m-4 border border-dark details">
         <div class="col-12">
             <h2 class="text-center">Transactions</h2>
             <table class="table table-bordered table-hover">
@@ -97,54 +98,8 @@
     </div>
     <!-- End Transactions Table -->
 
-<!--    &lt;!&ndash; Portfolios and Assets Table &ndash;&gt;-->
-<!--    <div class="row m-4 border border-dark">-->
-<!--        <div class="col-12">-->
-<!--            <h2 class="text-center">Portfolios and Assets</h2>-->
-<!--            <div class="table-responsive">-->
-<!--                <table class="table table-bordered table-hover">-->
-<!--                    <thead>-->
-<!--                    <tr>-->
-<!--                        <th>Account Name</th>-->
-<!--                        <th>Portfolio Name</th>-->
-<!--                        <th>Asset Name</th>-->
-<!--                        <th>Asset Type</th>-->
-<!--                    </tr>-->
-<!--                    </thead>-->
-<!--                    <tbody>-->
-<!--                    <tr th:each="account : ${user.accounts}">-->
-<!--                        <td th:text="${account.accountName}">Account Name</td>-->
-<!--                        &lt;!&ndash; Check if the account has portfolios &ndash;&gt;-->
-<!--&lt;!&ndash;                        <td th:if="${account.portfolios != null}">&ndash;&gt;-->
-<!--                            &lt;!&ndash; Display Portfolios for each Account &ndash;&gt;-->
-<!--                            <span th:each="portfolio : ${account.portfolios}">-->
-<!--                                <td th:text="${portfolio.portfolioName}">Portfolio Name</td>-->
-<!--                                &lt;!&ndash; Check if the portfolio has assets &ndash;&gt;-->
-<!--                                <span th:each="asset : ${portfolio.assets}">-->
-<!--                                    <td th:text="${asset.assetName}">Asset Name</td>-->
-<!--                                    <td th:text="${asset.assetType}">Asset Type</td>-->
-<!--                                    &lt;!&ndash; Handle case where portfolio has no assets &ndash;&gt;-->
-<!--                            <td th:if="${#lists.isEmpty(portfolio.assets)}" colspan="2">No assets found for this portfolio.</td>-->
-<!--                                </span>-->
-
-<!--                                &lt;!&ndash; Handle case where account has no portfolios &ndash;&gt;-->
-<!--                        <td th:if="${#lists.isEmpty(account.portfolios)}" colspan="3">No portfolios found for this account.</td>-->
-<!--                            </span>-->
-<!--&lt;!&ndash;                        </td>&ndash;&gt;-->
-
-
-<!--                        </td>-->
-
-<!--                    </tr>-->
-<!--                    </tbody>-->
-<!--                </table>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    &lt;!&ndash; End Portfolios and Assets Table &ndash;&gt;-->
-
     <!-- Portfolios and Assets Table -->
-    <div class="row m-4 border border-dark">
+    <div class="row m-4 border border-dark details">
         <div class="col-12">
             <h2 class="text-center">Portfolios and Assets</h2>
             <div class="table-responsive">
@@ -197,16 +152,11 @@
     </div>
     <!-- End Portfolios and Assets Table -->
 
-
-
-
-
     <div class="container bg-light">
         <div class="col-md-12 text-center">
             <button type="button" class="btn btn-primary"><a class="btn btn-primary" href="users" role="button">Go Back</a></button>
         </div>
     </div>
-
 
 </div>
 <!-- End main body -->
@@ -217,4 +167,4 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 </body>
-</html>;
+</html>

@@ -1,0 +1,60 @@
+/* styles.css */
+
+/* Add some padding and background color to the header */
+.header {
+  padding: 20px;
+  background-color: #f1f1f1;
+}
+
+/* Add some margin and a border to the navigation buttons */
+.btn-outline-primary {
+  margin: 5px;
+  border: 2px solid #007bff;
+  color: #007bff;
+}
+
+/* Add some hover effect for the navigation buttons */
+.btn-outline-primary:hover {
+  background-color: #007bff;
+  color: #ffffff;
+}
+
+.details {
+    border: 1px solid #3a86ff;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.details strong {
+    color: #3a86ff;
+    font-size: 18px;
+}
+
+.details span {
+    font-size: 18px;
+}
+
+.details .table {
+    margin-bottom: 0;
+}
+
+.details .table th {
+    background-color: #3a86ff;
+    color: #fff;
+}
+
+.details .table td {
+    background-color: #f2f2f2;
+    font-size: 16px;
+}
+
+.details .table td,
+.details .table th {
+    border: 1px solid #3a86ff;
+    padding: 8px;
+}
+
+.container .btn-primary {
+    background-color: #3a86ff;
+    border: none;
+}
