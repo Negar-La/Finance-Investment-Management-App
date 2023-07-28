@@ -389,4 +389,5 @@ class PortfolioDaoDBTest {
         assertTrue(assetsForPortfolio.contains(asset2));
     }
 
+
 }
