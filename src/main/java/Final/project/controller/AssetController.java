@@ -61,18 +61,9 @@ public class AssetController {
 
     @PostMapping("addAsset")
     public String addAsset(HttpServletRequest request) {
-//        String[] accountIds = request.getParameterValues("accountID");
-//
-//        List<Account> accounts = new ArrayList<>();
-//        if(accountIds != null) {
-//            for(String accountId: accountIds) {
-//                accounts.add(accountDao.getAccountById(Integer.parseInt(accountId)));
-//            }
-//        }
 
         String assetName = request.getParameter("assetName");
         String assetType = request.getParameter("assetType");
-
 
         Asset asset = new Asset();
         asset.setAssetName(assetName);

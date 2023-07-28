@@ -135,11 +135,9 @@ public class PortfolioController {
             result.addError(error);
         }
 
-
-
         if(result.hasErrors()) {
             model.addAttribute("assets", assetService.getAllAssets());
-                model.addAttribute("portfolio", portfolio);
+            model.addAttribute("portfolio", portfolio);
             return "editPortfolio";
         }
 
