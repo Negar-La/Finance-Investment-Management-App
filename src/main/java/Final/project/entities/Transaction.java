@@ -4,13 +4,14 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Transaction {
     private int transactionID;
     @NotNull(message = "Invalid date.")
-    private LocalDateTime transactionDate;
+    private LocalDate transactionDate;
     @NotNull(message = "Invalid amount.")
     private BigDecimal amount;
     @NotBlank(message = "Transaction Type must not be blank")
@@ -33,11 +34,11 @@ public class Transaction {
         this.transactionID = transactionID;
     }
 
-    public LocalDateTime getTransactionDate() {
+    public LocalDate  getTransactionDate() {
         return transactionDate;
     }
 
-    public void setTransactionDate(LocalDateTime transactionDate) {
+    public void setTransactionDate(LocalDate  transactionDate) {
         this.transactionDate = transactionDate;
     }
 

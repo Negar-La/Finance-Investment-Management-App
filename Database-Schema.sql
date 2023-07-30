@@ -6,12 +6,12 @@ CREATE DATABASE InvestmentManagementDB;
 -- Use the database
 USE InvestmentManagementDB;
 
- select * from Transaction;
- select * from Portfolio_Asset;
- select * from Asset;
- select * from Portfolio;
- select * from Account;
- select * from User;
+--  select * from Transaction;
+--  select * from Portfolio_Asset;
+--  select * from Asset;
+--  select * from Portfolio;
+--  select * from Account;
+--  select * from User;
 
 -- Create the User table
 CREATE TABLE User (
@@ -119,7 +119,7 @@ VALUES
 -- Create the Transaction table
 CREATE TABLE Transaction (
     TransactionID INT NOT NULL AUTO_INCREMENT,
-    TransactionDate DATE NOT NULL,
+    TransactionDate date NOT NULL,
     Amount DECIMAL(10, 2) NOT NULL,
     TransactionType VARCHAR(50) NOT NULL,
     Description VARCHAR(100) NOT NULL,

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -96,7 +97,7 @@ class TransactionDaoDBTest {
 
         // Create a transaction associated with the portfolio and asset
         Transaction transaction = new Transaction();
-        transaction.setTransactionDate(LocalDateTime.now().withNano(0));
+        transaction.setTransactionDate(LocalDate.now());
         transaction.setAmount(new BigDecimal("100.00"));
         transaction.setTransactionType("buy");
         transaction.setDescription("Buying Asset 1");
@@ -171,7 +172,7 @@ class TransactionDaoDBTest {
 
         // Create transactions associated with the portfolios and assets
         Transaction transaction1 = new Transaction();
-        transaction1.setTransactionDate(LocalDateTime.now().withNano(0));
+        transaction1.setTransactionDate(LocalDate.now());
         transaction1.setAmount(new BigDecimal("100.00"));
         transaction1.setTransactionType("buy");
         transaction1.setDescription("Buying Asset 1");
@@ -180,7 +181,7 @@ class TransactionDaoDBTest {
         transaction1 = transactionDao.addTransaction(transaction1);
 
         Transaction transaction2 = new Transaction();
-        transaction2.setTransactionDate(LocalDateTime.now().withNano(0));
+        transaction2.setTransactionDate(LocalDate.now());
         transaction2.setAmount(new BigDecimal("200.00"));
         transaction2.setTransactionType("sell");
         transaction2.setDescription("Selling Asset 2");
@@ -236,7 +237,7 @@ class TransactionDaoDBTest {
 
         // Create a transaction associated with the portfolio and asset
         Transaction transaction = new Transaction();
-        transaction.setTransactionDate(LocalDateTime.now().withNano(0));
+        transaction.setTransactionDate(LocalDate.now());
         transaction.setAmount(new BigDecimal("100.00"));
         transaction.setTransactionType("buy");
         transaction.setDescription("Buying Asset 1");
@@ -294,7 +295,7 @@ class TransactionDaoDBTest {
 
         // Create a transaction associated with the portfolio and asset
         Transaction transaction = new Transaction();
-        transaction.setTransactionDate(LocalDateTime.now().withNano(0));
+        transaction.setTransactionDate(LocalDate.now());
         transaction.setAmount(new BigDecimal("100.00"));
         transaction.setTransactionType("buy");
         transaction.setDescription("Buying Asset 1");
@@ -346,7 +347,7 @@ class TransactionDaoDBTest {
 
         // Create transactions associated with the portfolio and user
         Transaction transaction1 = new Transaction();
-        transaction1.setTransactionDate(LocalDateTime.now().withNano(0));
+        transaction1.setTransactionDate(LocalDate.now());
         transaction1.setAmount(new BigDecimal("100.00"));
         transaction1.setTransactionType("buy");
         transaction1.setDescription("Buying Asset 1");
@@ -355,7 +356,7 @@ class TransactionDaoDBTest {
         transaction1 = transactionDao.addTransaction(transaction1);
 
         Transaction transaction2 = new Transaction();
-        transaction2.setTransactionDate(LocalDateTime.now().withNano(0));
+        transaction2.setTransactionDate(LocalDate.now());
         transaction2.setAmount(new BigDecimal("200.00"));
         transaction2.setTransactionType("sell");
         transaction2.setDescription("Selling Asset 1");
@@ -416,7 +417,7 @@ class TransactionDaoDBTest {
 
         // Create transactions associated with the portfolio and user
         Transaction transaction1 = new Transaction();
-        transaction1.setTransactionDate(LocalDateTime.now().withNano(0));
+        transaction1.setTransactionDate(LocalDate.now());
         transaction1.setAmount(new BigDecimal("100.00"));
         transaction1.setTransactionType("buy");
         transaction1.setDescription("Buying Asset 1");
@@ -425,7 +426,7 @@ class TransactionDaoDBTest {
         transaction1 = transactionDao.addTransaction(transaction1);
 
         Transaction transaction2 = new Transaction();
-        transaction2.setTransactionDate(LocalDateTime.now().withNano(0));
+        transaction2.setTransactionDate(LocalDate.now());
         transaction2.setAmount(new BigDecimal("200.00"));
         transaction2.setTransactionType("sell");
         transaction2.setDescription("Selling Asset 1");
