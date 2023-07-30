@@ -44,12 +44,12 @@
                 <div class="form-group row">
                     <label for="transactionDate" class="col-3 col-form-label">Transaction Date</label>
                     <div class="col-9">
-                        <!-- Change input type to date -->
-                        <input type="date" name="transactionDate" id="transactionDate" class="form-control"
-                               th:value="${transactionDate}" />
-                        <div th:if="${#fields.hasErrors('transactionDate')}">
-                            <p th:each="error : ${#fields.errors('transactionDate')}" class="alert alert-danger" th:text="${error}">
-                                Bad transaction date </p>
+
+                        <input type="date" id="transactionDate" class="form-control" th:field="${transaction.transactionDate}"
+                               th:placeholder="'yyyy-MM-dd'" />
+                        <div th:if="${#fields.hasErrors('transaction.transactionDate')}">
+                            <p th:each="error : ${#fields.errors('transaction.transactionDate')}" class="alert alert-danger" th:text="${error}">
+                                Bad transactionDate </p>
                         </div>
                     </div>
                 </div>
@@ -75,7 +75,7 @@
                         <div th:if="${#fields.hasErrors('transaction.transactionType')}">
                             <p th:each="error : ${#fields.errors('transaction.transactionType')}"
                                class="alert alert-danger" th:text="${error}">
-                                Bad transaction type </p>
+                                Bad transactionType </p>
                         </div>
                     </div>
                 </div>

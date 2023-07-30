@@ -6,14 +6,14 @@ import Final.project.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.ConstraintViolation;
+import javax.validation.Valid;
 import javax.validation.Validation;
 import javax.validation.Validator;
+import java.beans.PropertyEditorSupport;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -114,7 +114,7 @@ public class TransactionController {
     }
 
     @PostMapping("editTransaction")
-    public String updateTransaction(@ModelAttribute("transaction") Transaction transaction,
+    public String updateTransaction(@ModelAttribute("transaction") @Valid Transaction transaction,
                                     @RequestParam("transactionDate") String transactionDate,
                                     @RequestParam("amount") String amount,
                                     @RequestParam("transactionType") String transactionType,
@@ -150,4 +150,17 @@ public class TransactionController {
         return "redirect:/transactions";
     }
 
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(LocalDate.class, new PropertyEditorSupport() {
+            @Override
+            public void setAsText(String text) throws IllegalArgumentException {
+                // Define the date format to match the one used in the form (yyyy-MM-dd)
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                LocalDate date = LocalDate.parse(text, formatter);
+                setValue(date);
+            }
+        });
+    }
 }
