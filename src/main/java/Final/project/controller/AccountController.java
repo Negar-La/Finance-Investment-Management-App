@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -104,7 +105,7 @@ public class AccountController {
         return "accountDetail";
     }
 
-    @GetMapping("deleteAccount")
+    @PostMapping ("deleteAccount")
     public String deleteAccount(HttpServletRequest request) {
         int id = Integer.parseInt(request.getParameter("id"));
         accountService.deleteAccountById(id);
