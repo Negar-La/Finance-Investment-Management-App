@@ -94,7 +94,7 @@ public class TransactionController {
         return "redirect:/transactions";
     }
 
-    @GetMapping("deleteTransaction")
+    @PostMapping("deleteTransaction")
     public String deleteTransaction(@RequestParam("id") int id) {
         transactionService.deleteTransactionById(id);
         return "redirect:/transactions";

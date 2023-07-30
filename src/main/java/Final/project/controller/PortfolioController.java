@@ -99,7 +99,7 @@ public class PortfolioController {
         return "portfolioDetail";
     }
 
-    @GetMapping("deletePortfolio")
+    @PostMapping("deletePortfolio")
     public String deletePortfolio(HttpServletRequest request) {
         int id = Integer.parseInt(request.getParameter("id"));
         portfolioService.deletePortfolioById(id);

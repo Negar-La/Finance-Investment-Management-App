@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -78,7 +79,7 @@ public class AssetController {
         return "redirect:/assets";
     }
 
-    @GetMapping("deleteAsset")
+    @PostMapping("deleteAsset")
     public String deleteAsset(HttpServletRequest request) {
         int id = Integer.parseInt(request.getParameter("id"));
         assetService.deleteAssetById(id);
