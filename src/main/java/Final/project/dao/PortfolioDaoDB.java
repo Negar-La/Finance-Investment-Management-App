@@ -95,7 +95,11 @@ public class PortfolioDaoDB implements PortfolioDao{
 
     @Override
     public void deletePortfolioById(int id) {
-        // Delete the portfolio's assets from the Portfolio_Asset table first
+        // Delete the transactions related to the portfolio first
+        final String DELETE_TRANSACTIONS = "DELETE FROM Transaction WHERE PortfolioID = ?";
+        jdbc.update(DELETE_TRANSACTIONS, id);
+
+        // Delete the portfolio's assets from the Portfolio_Asset table
         final String DELETE_PORTFOLIO_ASSETS = "DELETE FROM Portfolio_Asset WHERE PortfolioID = ?";
         jdbc.update(DELETE_PORTFOLIO_ASSETS, id);
 
@@ -103,6 +107,7 @@ public class PortfolioDaoDB implements PortfolioDao{
         final String DELETE_PORTFOLIO = "DELETE FROM Portfolio WHERE PortfolioID = ?";
         jdbc.update(DELETE_PORTFOLIO, id);
     }
+
 
     @Override
     public List<Portfolio> getPortfoliosByUserId(int userId) {

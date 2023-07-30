@@ -70,15 +70,20 @@
                 <div class="form-group row">
                     <label for="transactionType" class="col-3 col-form-label">Transaction Type</label>
                     <div class="col-9">
-                        <input type="text" name="transactionType" id="transactionType" class="form-control"
-                               th:value="${transaction.transactionType}" />
+                        <select name="transactionType" id="transactionType" class="form-control">
+                            <option value="">Select Transaction Type</option>
+                            <option value="Buy" th:selected="${transaction.transactionType == 'Buy'}">Buy</option>
+                            <option value="Sell" th:selected="${transaction.transactionType == 'Sell'}">Sell</option>
+                            <option value="Withdrawal" th:selected="${transaction.transactionType == 'Withdrawal'}">Withdrawal</option>
+                            <option value="Deposit" th:selected="${transaction.transactionType == 'Deposit'}">Deposit</option>
+                        </select>
                         <div th:if="${#fields.hasErrors('transaction.transactionType')}">
-                            <p th:each="error : ${#fields.errors('transaction.transactionType')}"
-                               class="alert alert-danger" th:text="${error}">
-                                Bad transactionType </p>
+                            <p th:each="error : ${#fields.errors('transaction.transactionType')}" class="alert alert-danger"
+                               th:text="${error}">Bad transactionType</p>
                         </div>
                     </div>
                 </div>
+
 
                 <div class="form-group row">
                     <label for="description" class="col-3 col-form-label">Description</label>
