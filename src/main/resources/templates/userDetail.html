@@ -98,6 +98,16 @@
     </div>
     <!-- End Transactions Table -->
 
+    <div class="row m-4 border border-dark details">
+
+        <!-- Display the user's balance -->
+        <div class="col-6 text-right"><strong>Final Balance</strong></div>
+        <div class="col-6 text-left">
+            $<span th:text="${balance}">display balance</span>
+        </div>
+    </div>
+
+
     <!-- Portfolios and Assets Table -->
     <div class="row m-4 border border-dark details">
         <div class="col-12">
