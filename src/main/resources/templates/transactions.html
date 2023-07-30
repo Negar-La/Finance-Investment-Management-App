@@ -52,12 +52,13 @@
             <form action="addTransaction" method="POST">
                 <div class="form-group row">
                     <label for="transactionDate" class="col-3 col-form-label">
-                         Date</label>
+                        Date</label>
                     <div class="col-9">
-                        <input type="datetime-local" name="transactionDate"
-                               id="transactionDate" class="form-control"/>
+                        <!-- Update the input type to "date" instead of "datetime-local" -->
+                        <input type="date" name="transactionDate" id="transactionDate" class="form-control"/>
                     </div>
                 </div>
+
 
                 <div class="form-group row">
                     <label for="amount" class="col-3 col-form-label">

@@ -167,7 +167,7 @@ public class TransactionDaoDB implements TransactionDao{
         public Transaction mapRow(ResultSet rs, int rowNum) throws SQLException {
             Transaction transaction = new Transaction();
             transaction.setTransactionID(rs.getInt("TransactionID"));
-            transaction.setTransactionDate(rs.getTimestamp("TransactionDate").toLocalDateTime());
+            transaction.setTransactionDate(rs.getDate("TransactionDate").toLocalDate());
             transaction.setAmount(rs.getBigDecimal("Amount"));
             transaction.setTransactionType(rs.getString("TransactionType"));
             transaction.setDescription(rs.getString("Description"));

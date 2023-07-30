@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -14,6 +15,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
@@ -65,7 +67,7 @@ public class TransactionController {
                                  @RequestParam("assetID") int assetID) {
 
         // Parse the inputs as needed (e.g., convert transactionDate to a valid date format)
-        LocalDateTime parsedDate = LocalDateTime.parse(transactionDate, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        LocalDate parsedDate = LocalDate.parse(transactionDate, DateTimeFormatter.ISO_LOCAL_DATE);
         // Create a new Transaction object
         Transaction transaction = new Transaction();
         transaction.setTransactionDate(parsedDate);
@@ -105,9 +107,47 @@ public class TransactionController {
         List<Asset> assets = assetService.getAllAssets();
 
         model.addAttribute("transaction", transaction);
+        model.addAttribute("transactionDate", transaction.getTransactionDate().toString());
         model.addAttribute("portfolios", portfolios);
         model.addAttribute("assets", assets);
         return "editTransaction";
+    }
+
+    @PostMapping("editTransaction")
+    public String updateTransaction(@ModelAttribute("transaction") Transaction transaction,
+                                    @RequestParam("transactionDate") String transactionDate,
+                                    @RequestParam("amount") String amount,
+                                    @RequestParam("transactionType") String transactionType,
+                                    @RequestParam("description") String description,
+                                    @RequestParam("portfolioID") int portfolioID,
+                                    @RequestParam("assetID") int assetID) {
+
+        // Parse the transactionDate input as needed (e.g., convert it to a valid date format)
+        LocalDate parsedDate = LocalDate.parse(transactionDate, DateTimeFormatter.ISO_LOCAL_DATE);
+
+        // Update the Transaction object with the edited data
+        transaction.setTransactionDate(parsedDate);
+        transaction.setAmount(new BigDecimal(amount));
+        transaction.setTransactionType(transactionType);
+        transaction.setDescription(description);
+
+        // Get the corresponding Portfolio and Asset objects using their IDs
+        Portfolio portfolio = portfolioService.getPortfolioById(portfolioID);
+        Asset asset = assetService.getAssetById(assetID);
+
+        // Set the Portfolio and Asset objects for the Transaction
+        transaction.setPortfolio(portfolio);
+        transaction.setAsset(asset);
+
+        // Perform validation using Bean Validation (JSR 380)
+        Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+        Set<ConstraintViolation<Transaction>> violations = validator.validate(transaction);
+
+        if (violations.isEmpty()) {
+            transactionService.updateTransaction(transaction);
+        }
+
+        return "redirect:/transactions";
     }
 
 }

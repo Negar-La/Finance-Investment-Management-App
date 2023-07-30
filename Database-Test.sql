@@ -7,11 +7,11 @@ CREATE DATABASE InvestmentManagementDBTest;
 USE InvestmentManagementDBTest;
 
 --  select * from Transaction;
-  select * from Portfolio_Asset;
-  select * from Asset;
-  select * from Portfolio;
-  select * from Account;
-  select * from User;
+--   select * from Portfolio_Asset;
+--   select * from Asset;
+--   select * from Portfolio;
+--   select * from Account;
+--   select * from User;
 
 -- Create the User table
 CREATE TABLE User (
