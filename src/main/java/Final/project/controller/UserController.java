@@ -23,6 +23,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Valid;
 import javax.validation.Validation;
 import javax.validation.Validator;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -90,6 +91,7 @@ public class UserController {
         User user = userService.getUserById(id);
         if (user != null) {
             List<Transaction> transactions = transactionService.getTransactionsByUserId(id);
+            BigDecimal balance = transactionService.getUserBalance(id);
 
             if (user.getAccounts() != null) {
                 List<Portfolio> portfolios;
@@ -103,6 +105,8 @@ public class UserController {
 
             model.addAttribute("user", user);
             model.addAttribute("transactions", transactions);
+            // Pass the calculated balance to the view
+            model.addAttribute("balance", balance);
             return "userDetail";
         } else {
             // Handle the case where the user is null

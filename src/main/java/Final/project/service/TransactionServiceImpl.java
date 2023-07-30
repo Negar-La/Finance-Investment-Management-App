@@ -5,6 +5,7 @@ import Final.project.entities.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 @Service
 public class TransactionServiceImpl implements TransactionService {
@@ -44,5 +45,24 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public List<Transaction> getTransactionsByUserId(int userId) {
         return transactionDao.getTransactionsByUserId(userId);
+    }
+
+    @Override
+    public BigDecimal getUserBalance(int userId) {
+        List<Transaction> transactions = transactionDao.getTransactionsByUserId(userId);
+        BigDecimal balance = BigDecimal.ZERO;
+
+        for (Transaction transaction : transactions) {
+            BigDecimal amount = transaction.getAmount();
+            if ("buy".equalsIgnoreCase(transaction.getTransactionType())
+                    || "deposit".equalsIgnoreCase(transaction.getTransactionType())) {
+                balance = balance.add(amount);
+            } else if ("sell".equalsIgnoreCase(transaction.getTransactionType())
+                    || "withdrawal".equalsIgnoreCase(transaction.getTransactionType())) {
+                balance = balance.subtract(amount);
+            }
+        }
+
+        return balance;
     }
 }
