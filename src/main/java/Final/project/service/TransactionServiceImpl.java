@@ -12,6 +12,11 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Autowired
     private TransactionDao transactionDao;
+
+    @Autowired
+    public TransactionServiceImpl(TransactionDao transactionDao) {
+        this.transactionDao = transactionDao;
+    }
     @Override
     public Transaction getTransactionById(int id) {
         return transactionDao.getTransactionById(id);
@@ -52,6 +57,7 @@ public class TransactionServiceImpl implements TransactionService {
         List<Transaction> transactions = transactionDao.getTransactionsByUserId(userId);
         BigDecimal balance = BigDecimal.ZERO;
 
+        //the user is adding assets when they perform a "buy" or "deposit"
         for (Transaction transaction : transactions) {
             BigDecimal amount = transaction.getAmount();
             if ("buy".equalsIgnoreCase(transaction.getTransactionType())
