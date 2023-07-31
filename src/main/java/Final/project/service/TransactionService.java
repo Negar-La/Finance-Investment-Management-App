@@ -16,5 +16,5 @@ public interface TransactionService {
     List<Transaction> getTransactionsByPortfolioId(int portfolioId);
     List<Transaction> getTransactionsByUserId(int userId);
 
-    BigDecimal getUserBalance(int userId);
+    BigDecimal getUserBalance(int userId) throws InsufficientFundsException;
 }
