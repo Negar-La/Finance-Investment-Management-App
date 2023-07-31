@@ -48,7 +48,7 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public BigDecimal getUserBalance(int userId) {
+    public BigDecimal getUserBalance(int userId) throws InsufficientFundsException {
         List<Transaction> transactions = transactionDao.getTransactionsByUserId(userId);
         BigDecimal balance = BigDecimal.ZERO;
 
@@ -59,7 +59,11 @@ public class TransactionServiceImpl implements TransactionService {
                 balance = balance.add(amount);
             } else if ("sell".equalsIgnoreCase(transaction.getTransactionType())
                     || "withdrawal".equalsIgnoreCase(transaction.getTransactionType())) {
-                balance = balance.subtract(amount);
+                if (balance.compareTo(amount) >= 0) {
+                    balance = balance.subtract(amount);
+                } else {
+                    throw new InsufficientFundsException("Insufficient funds for withdrawal.");
+                }
             }
         }
 

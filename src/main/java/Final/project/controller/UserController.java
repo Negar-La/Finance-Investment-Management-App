@@ -5,10 +5,7 @@ import Final.project.dao.PortfolioDao;
 import Final.project.dao.TransactionDao;
 import Final.project.dao.UserDao;
 import Final.project.entities.*;
-import Final.project.service.AccountService;
-import Final.project.service.PortfolioService;
-import Final.project.service.TransactionService;
-import Final.project.service.UserService;
+import Final.project.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -88,30 +85,35 @@ public class UserController {
 
     @GetMapping("userDetail")
     public String userDetail(Integer id, Model model) {
-        User user = userService.getUserById(id);
-        if (user != null) {
-            List<Transaction> transactions = transactionService.getTransactionsByUserId(id);
-            BigDecimal balance = transactionService.getUserBalance(id);
+        try{
+            User user = userService.getUserById(id);
+            if (user != null) {
+                List<Transaction> transactions = transactionService.getTransactionsByUserId(id);
+                BigDecimal balance = transactionService.getUserBalance(id);
 
-            if (user.getAccounts() != null) {
-                List<Portfolio> portfolios;
+                if (user.getAccounts() != null) {
+                    List<Portfolio> portfolios;
 
-                // For each account, fetch portfolios and assets
-                for (Account account : user.getAccounts()) {
-                    portfolios = portfolioService.getPortfoliosByUserId(user.getUserID());
-                    account.setPortfolios(portfolios);
+                    // For each account, fetch portfolios and assets
+                    for (Account account : user.getAccounts()) {
+                        portfolios = portfolioService.getPortfoliosByUserId(user.getUserID());
+                        account.setPortfolios(portfolios);
+                    }
                 }
-            }
 
-            model.addAttribute("user", user);
-            model.addAttribute("transactions", transactions);
-            // Pass the calculated balance to the view
-            model.addAttribute("balance", balance);
-            return "userDetail";
-        } else {
-            // Handle the case where the user is null
-            // For example, you can show an error message or redirect to a different page
-            return "error";
+                model.addAttribute("user", user);
+                model.addAttribute("transactions", transactions);
+                // Pass the calculated balance to the view
+                model.addAttribute("balance", balance);
+                return "userDetail";
+            } else {
+                // Handle the case where the user is null
+                // For example, you can show an error message or redirect to a different page
+                return "error";
+            }
+        } catch (InsufficientFundsException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "error-page";
         }
     }
 
