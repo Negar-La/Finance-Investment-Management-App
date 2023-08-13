@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <title>Edit Transaction</title>
+</head>
+<body>
+<!-- Main Body of Page -->
+<div class="container">
+    <div class="row m-4">
+        <div class="col text-center border border-dark">
+            <h1><a href="/" class="text-dark">Edit Transaction</a></h1>
+        </div>
+    </div>
+    <div class="row m-3 border border-dark">
+        <div class="col text-center m-3">
+            <a href="users" class="btn btn-outline-primary btn-lg">Users</a>
+        </div>
+        <div class="col text-center m-3">
+            <a href="accounts" class="btn btn-outline-primary btn-lg">Accounts</a>
+        </div>
+        <div class="col text-center m-3">
+            <a href="portfolios" class="btn btn-outline-primary btn-lg">Portfolios</a>
+        </div>
+        <div class="col text-center m-3">
+            <a href="assets" class="btn btn-outline-primary btn-lg">Assets</a>
+        </div>
+        <div class="col text-center m-3">
+            <a href="transactions" class="btn btn-outline-primary btn-lg">Transactions</a>
+        </div>
+    </div>
+    <div class="row m-4 border border-dark">
+        <div class="col-3 text-center m-3">
+            <span class="h3">Edit Transaction</span>
+        </div>
+        <div class="col-7 text-center m-3">
+            <form action="editTransaction" method="POST">
+                <div class="form-group row">
+                    <label for="transactionDate" class="col-3 col-form-label">Transaction Date</label>
+                    <div class="col-9">
+
+                        <input type="date" id="transactionDate" class="form-control" th:field="${transaction.transactionDate}"
+                               th:placeholder="'yyyy-MM-dd'" />
+                        <div th:if="${#fields.hasErrors('transaction.transactionDate')}">
+                            <p th:each="error : ${#fields.errors('transaction.transactionDate')}" class="alert alert-danger" th:text="${error}">
+                                Bad transactionDate </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="amount" class="col-3 col-form-label">Amount</label>
+                    <div class="col-9">
+                        <input type="text" name="amount" id="amount" class="form-control"
+                               th:value="${transaction.amount}" />
+                        <div th:if="${#fields.hasErrors('transaction.amount')}">
+                            <p th:each="error : ${#fields.errors('transaction.amount')}"
+                               class="alert alert-danger" th:text="${error}">
+                                Bad amount </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="transactionType" class="col-3 col-form-label">Transaction Type</label>
+                    <div class="col-9">
+                        <select name="transactionType" id="transactionType" class="form-control">
+                            <option value="">Select Transaction Type</option>
+                            <option value="Buy" th:selected="${transaction.transactionType == 'Buy'}">Buy</option>
+                            <option value="Sell" th:selected="${transaction.transactionType == 'Sell'}">Sell</option>
+                            <option value="Withdrawal" th:selected="${transaction.transactionType == 'Withdrawal'}">Withdrawal</option>
+                            <option value="Deposit" th:selected="${transaction.transactionType == 'Deposit'}">Deposit</option>
+                        </select>
+                        <div th:if="${#fields.hasErrors('transaction.transactionType')}">
+                            <p th:each="error : ${#fields.errors('transaction.transactionType')}" class="alert alert-danger"
+                               th:text="${error}">Bad transactionType</p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group row">
+                    <label for="description" class="col-3 col-form-label">Description</label>
+                    <div class="col-9">
+                        <input type="text" name="description" id="description" class="form-control"
+                               th:value="${transaction.description}" />
+                        <div th:if="${#fields.hasErrors('transaction.description')}">
+                            <p th:each="error : ${#fields.errors('transaction.description')}"
+                               class="alert alert-danger" th:text="${error}">
+                                Bad description </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="portfolio" class="col-3 col-form-label">Portfolio</label>
+                    <div class="col-9">
+                        <select id="portfolio" name="portfolioID" class="form-control">
+                            <option th:each="portfolio : ${portfolios}"
+                                    th:value="${portfolio.portfolioID}"
+                                    th:text="${portfolio.portfolioName}"
+                                    th:selected="${portfolio.portfolioID == transaction.portfolio.portfolioID}">
+                                Portfolio Name</option>
+                        </select>
+                        <div th:if="${#fields.hasErrors('transaction.portfolio.portfolioID')}">
+                            <p th:each="error : ${#fields.errors('transaction.portfolio.portfolioID')}"
+                               class="alert alert-danger" th:text="${error}">
+                                Bad portfolio </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="asset" class="col-3 col-form-label">Asset</label>
+                    <div class="col-9">
+                        <select id="asset" name="assetID" class="form-control">
+                            <option th:each="asset : ${assets}"
+                                    th:value="${asset.assetID}"
+                                    th:text="${asset.assetName}"
+                                    th:selected="${asset.assetID == transaction.asset.assetID}">
+                                Asset Name</option>
+                        </select>
+                        <div th:if="${#fields.hasErrors('transaction.asset.assetID')}">
+                            <p th:each="error : ${#fields.errors('transaction.asset.assetID')}"
+                               class="alert alert-danger" th:text="${error}">
+                                Bad asset </p>
+                        </div>
+                    </div>
+                </div>
+
+                <input type="hidden" name="transactionID" th:value="${transaction.transactionID}"/>
+                <button type="submit" class="btn btn-primary">Edit Transaction</button>
+                <button type="button" class="btn btn-light"><a href="transactions">Cancel</a></button>
+
+            </form>
+        </div>
+    </div>
+</div>
+<!-- End main body -->
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</body>
+</html>

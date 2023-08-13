@@ -11,7 +11,7 @@ Users can register and access their financial information.
 The application supports the creation and management of multiple financial accounts, including checking, savings, and investment accounts.
 
 ### Portfolio Tracking
-Keep track of your investment portfolios effortlessly. The application provides tools to monitor portfolio performance, view asset allocations.
+Keep track of your investment portfolios effortlessly. The application provides tools to monitor portfolio performance and view asset allocations.
 
 ### Transaction Recording
 Record financial transactions such as deposits, withdrawals, and investments. Each transaction includes details like date, amount, portfolio, and asset.
@@ -23,7 +23,7 @@ Manage various types of assets, including stocks, bonds, real estate, and more. 
 Gain valuable insights into your financial portfolio and track transactions effectively. Explore detailed overviews of users' portfolios and their transaction history, presented as separate tables for enhanced clarity. Additionally, the application computes and displays the final balance, offering a comprehensive view of the financial status.
 
 ### Entity Relationship Diagram (ERD):
-![Project Screenshot](ERD-image.jpg)
+![Project Screenshot](sql-pdf-img-files/ERD-image.jpg)
 
 ## Technology Stack
 

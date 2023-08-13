@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+    </style>
+    <title>Personal Finance and Investment Management Application</title>
+</head>
+<body>
+<!-- Main Body of Page -->
+<div class="container">
+    <div class="row m-4 header">
+        <div class="col text-center border border-dark">
+            <h1><a href="/" class="text-dark">Personal Finance and Investment Management Application</a></h1>
+        </div>
+    </div>
+    <div class="row m-3 border border-dark">
+        <div class="col text-center m-3">
+            <a href="users" class="btn btn-outline-primary btn-lg">Users</a>
+        </div>
+        <div class="col text-center m-3">
+            <a href="accounts" class="btn btn-outline-primary btn-lg">Accounts</a>
+        </div>
+        <div class="col text-center m-3">
+            <a href="portfolios" class="btn btn-outline-primary btn-lg">Portfolios</a>
+        </div>
+        <div class="col text-center m-3">
+            <a href="assets" class="btn btn-outline-primary btn-lg">Assets</a>
+        </div>
+        <div class="col text-center m-3">
+            <a href="transactions" class="btn btn-outline-primary btn-lg">Transactions</a>
+        </div>
+    </div>
+    <div class="row m-4 border border-dark add-portfolio">
+
+        <div class="col-12 m-1 text-center"
+             th:if="${!errors.isEmpty()}">
+            <p class="alert alert-danger" th:each="error : ${errors}"
+               th:text="${error.message}">Error message</p>
+        </div>
+
+        <div class="col-3 text-center m-3">
+            <span class="h3">Add Portfolio</span>
+            <h1 class="display-1">📁</h1>
+        </div>
+        <div class="col-7 text-center m-3">
+            <form action="addPortfolio" method="POST">
+                <div class="form-group row">
+                    <label for="accountID" class="col-3 col-form-label">
+                        <strong> Account ID:</strong></label>
+                    <div class="col-9">
+                        <input type="number" name="accountID"
+                               id="accountID" class="form-control" required/>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="portfolioName" class="col-3 col-form-label">
+                        <strong> Portfolio Name:</strong></label>
+                    <div class="col-9">
+                        <input type="text" name="portfolioName"
+                               id="portfolioName" class="form-control"/>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="assets" class="col-3 col-form-label">
+                        <strong> Asssets:</strong></label>
+                    <div class="col-9">
+                        <select multiple id="assets" name="id"
+                                class="form-control" >
+                            <option th:each="asset : ${assets}"
+                                    th:value="${asset.assetID}"
+                                    th:text="${asset.assetName}">
+                                Asset Name</option>
+                        </select>
+                    </div>
+                </div>
+
+
+
+                <button type="submit" class="btn btn-primary">Add Portfolio</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="row m-4 border border-dark">
+        <div class="col text-center m-3">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Portfolio ID</th>
+                    <th>Portfolio Name</th>
+                    <th>Account ID</th>
+                    <th>Details</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="portfolio : ${portfolios}">
+                    <td th:text="${portfolio.portfolioID}">Portfolio ID</td>
+                    <td th:text="${portfolio.portfolioName}">Portfolio Name</td>
+                    <td th:text='${portfolio.accountID}'>Account ID</td>
+                    <td><a href="#" th:href="@{/portfolioDetail(id=${portfolio.portfolioID})}" style="color: #18ABDD;">Details</a></td>
+                    <td><a href="#" th:href="@{/editPortfolio(id=${portfolio.portfolioID})}" style="color: #FF9B26;">Edit</a></td>
+                    <td>
+                        <!-- Add a delete confirmation modal -->
+                        <a href="#" class="btn btn-danger btn-sm" th:data-portfolio-id="${portfolio.portfolioID}"
+                           data-toggle="modal" data-target="#deleteModal" style="color: #db303b; background-color: transparent; border:none;">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- End main body -->
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Delete Portfolio</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this portfolio?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <!-- Create a form to handle the delete action -->
+                <form id="deletePortfolioForm" method="post">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+<script>
+    $(document).ready(function () {
+        // When the delete button in the table is clicked
+        $('.btn-danger').on('click', function () {
+            // Get the portfolio ID from the data-portfolio-id attribute
+            const portfolioId = $(this).data('portfolio-id');
+            // Set the form action with the portfolio ID to delete
+            if (typeof portfolioId !== 'undefined') {
+                $('#deletePortfolioForm').attr('action', '/deletePortfolio?id=' + portfolioId);
+            }
+        });
+    });
+</script>
+
+</body>
+</html>;

@@ -1,0 +1,63 @@
+/* styles.css */
+
+/* Add some padding and background color to the header */
+.header {
+  padding: 20px;
+  background-color: #f1f1f1;
+}
+
+/* Add some margin and a border to the navigation buttons */
+.btn-outline-primary {
+  margin: 5px;
+  border: 2px solid #007bff;
+  color: #007bff;
+}
+
+/* Add some hover effect for the navigation buttons */
+.btn-outline-primary:hover {
+  background-color: #007bff;
+  color: #ffffff;
+}
+
+/* Style the form fields */
+.form-control {
+  border: 2px solid #007bff;
+}
+
+/* Add some margin and padding for the user table */
+.table {
+  margin-top: 20px;
+  padding: 10px;
+}
+
+/* Style the "Add User" section */
+.add-user, .add-account, .add-portfolio, .add-asset, .add-transaction {
+  padding: 10px;
+  background-color: #f1f1f1;
+}
+
+/* Style the "Delete User" modal */
+.modal-content {
+  border: 2px solid #007bff;
+  border-radius: 10px;
+}
+
+.modal-header {
+  background-color: #007bff;
+  color: #ffffff;
+}
+
+.modal-footer {
+  background-color: #f1f1f1;
+}
+
+/* Style the delete button */
+.btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+  border-color: #bd2130;
+}
