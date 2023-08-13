@@ -115,12 +115,12 @@
                     <td th:text="${portfolio.portfolioID}">Portfolio ID</td>
                     <td th:text="${portfolio.portfolioName}">Portfolio Name</td>
                     <td th:text='${portfolio.accountID}'>Account ID</td>
-                    <td><a href="#" th:href="@{/portfolioDetail(id=${portfolio.portfolioID})}" style="color: blue;">Details</a></td>
-                    <td><a href="#" th:href="@{/editPortfolio(id=${portfolio.portfolioID})}" style="color: orange;">Edit</a></td>
+                    <td><a href="#" th:href="@{/portfolioDetail(id=${portfolio.portfolioID})}" style="color: #18ABDD;">Details</a></td>
+                    <td><a href="#" th:href="@{/editPortfolio(id=${portfolio.portfolioID})}" style="color: #FF9B26;">Edit</a></td>
                     <td>
                         <!-- Add a delete confirmation modal -->
                         <a href="#" th:data-portfolio-id="${portfolio.portfolioID}"
-                           data-toggle="modal" data-target="#deleteModal" style="color: red;">Delete</a>
+                           data-toggle="modal" data-target="#deleteModal" style="color: #db303b;">Delete</a>
                     </td>
                 </tr>
                 </tbody>

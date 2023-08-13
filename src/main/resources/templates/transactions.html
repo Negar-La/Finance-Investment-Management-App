@@ -157,11 +157,11 @@
                     <td th:text="${transaction.description}">Description</td>
                     <td th:text="${transaction.portfolio.portfolioName}">Portfolio</td>
                     <td th:text="${transaction.asset.assetName}">Asset</td>
-                    <td><a href="#" th:href="@{/editTransaction(id=${transaction.transactionID})}"  style="color: orange;">Edit</a></td>
+                    <td><a href="#" th:href="@{/editTransaction(id=${transaction.transactionID})}"  style="color: #FF9B26;">Edit</a></td>
                     <td>
                         <!-- Add a delete confirmation modal -->
                         <a href="#" th:data-transaction-id="${transaction.transactionID}"
-                           data-toggle="modal" data-target="#deleteModal" style="color: red;">Delete</a>
+                           data-toggle="modal" data-target="#deleteModal" style="color: #db303b;">Delete</a>
                     </td>
                 </tr>
                 </tbody>
