@@ -10,7 +10,14 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="styles.css">
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+    </style>
     <title>Personal Finance and Investment Management Application</title>
 </head>
 <body>
@@ -55,7 +62,7 @@
             <form action="addAccount" method="POST">
                 <div class="form-group row">
                     <label for="accountUserID" class="col-3 col-form-label">
-                        User Name</label>
+                        <strong>  User Name:</strong></label>
                     <div class="col-9">
                         <select id="accountUserID" name="userId" class="form-control" >
                             <option th:each="user : ${users}"
@@ -68,7 +75,7 @@
 
                 <div class="form-group row">
                     <label for="accountName" class="col-3 col-form-label">
-                        Account Name</label>
+                        <strong>Account Name:</strong></label>
                     <div class="col-9">
                         <input type="text" name="accountName"
                                id="accountName" class="form-control"/>
@@ -77,7 +84,7 @@
 
                 <div class="form-group row">
                     <label for="accountType" class="col-3 col-form-label">
-                        Account Type</label>
+                        <strong>Account Type:</strong></label>
                     <div class="col-9">
                         <input type="text" name="accountType"
                                id="accountType" class="form-control"/>
@@ -86,7 +93,7 @@
 
                 <div class="form-group row">
                     <label for="portfolios" class="col-3 col-form-label">
-                        Portfolios</label>
+                        <strong>Portfolios:</strong></label>
                     <div class="col-9">
                         <select multiple id="portfolios" name="id"
                                 class="form-control" >
@@ -129,12 +136,12 @@
                     </span>
                     </td>
 
-                    <td><a href="#" th:href="@{/accountDetail(id=${account.accountID})}">Details</a></td>
-                    <td><a href="#" th:href="@{/editAccount(id=${account.accountID})}">Edit</a></td>
+                    <td><a href="#" th:href="@{/accountDetail(id=${account.accountID})}" style="color: blue;">Details</a></td>
+                    <td><a href="#" th:href="@{/editAccount(id=${account.accountID})}" style="color: orange;">Edit</a></td>
                     <td>
                         <!-- Add a delete confirmation modal -->
-                        <a href="#" class="btn btn-danger btn-sm" th:data-account-id="${account.accountID}"
-                           data-toggle="modal" data-target="#deleteModal">Delete</a>
+                        <a href="#" th:data-account-id="${account.accountID}"
+                           data-toggle="modal" data-target="#deleteModal" style="color: red;">Delete</a>
                     </td>
                 </tr>
                 </tbody>
