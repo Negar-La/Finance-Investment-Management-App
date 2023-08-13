@@ -98,11 +98,11 @@
                     <td th:text="${asset.assetID}">Asset ID</td>
                     <td th:text="${asset.assetName}">Asset Name</td>
                     <td th:text='${asset.assetType}'>Asset type</td>
-                    <td><a href="#" th:href="@{/editAsset(id=${asset.assetID})}" style="color: orange;">Edit</a></td>
+                    <td><a href="#" th:href="@{/editAsset(id=${asset.assetID})}" style="color: #FF9B26;">Edit</a></td>
                     <td>
                         <!-- Add a delete confirmation modal -->
                         <a href="#"  th:data-asset-id="${asset.assetID}"
-                           data-toggle="modal" data-target="#deleteModal" style="color: red;">Delete</a>
+                           data-toggle="modal" data-target="#deleteModal" style="color: #db303b;">Delete</a>
                     </td>
                 </tr>
                 </tbody>

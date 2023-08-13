@@ -44,6 +44,8 @@
             <a href="transactions" class="btn btn-outline-primary btn-lg">Transactions</a>
         </div>
     </div>
+
+
     <div class="row m-4 border border-dark add-user">
 
         <div class="col-12 m-1 text-center"
@@ -51,6 +53,7 @@
             <p class="alert alert-danger" th:each="error : ${errors}"
                th:text="${error.message}">Error message</p>
         </div>
+
 
         <div class="col-3 text-center m-3">
             <span class="h3">Add User</span>
@@ -100,9 +103,18 @@
         </div>
     </div>
 
+    <div class="form-group row m-4 border border-dark add-user text-center">
+        <label for="userSearch" class="col-form-label col-3"> <strong>Search By Name: </strong></label>
+        <div class="col-6">
+            <input type="text" id="userSearch" class="form-control"
+                   placeholder="Type user name..." />
+        </div>
+    </div>
+
+
     <div class="row m-4 border border-dark">
         <div class="col text-center m-3">
-            <table class="table table-striped">
+            <table class="table table-striped" id="usersTable">
                 <thead>
                 <tr>
                     <th>ID</th>
@@ -117,15 +129,15 @@
                 <tbody>
                 <tr th:each="user : ${users}">
                     <td th:text="${user.userID}">User ID</td>
-                    <td th:text="${user.firstName + ' ' + user.lastName}">User Name</td>
+                    <td class="user-name" th:text="${user.firstName + ' ' + user.lastName}">User Name</td>
                     <td th:text='${user.email}'>User Email</td>
                     <td th:text='${user.phone}'>User Phone</td>
-                    <td><a href="#" th:href="@{/userDetail(id=${user.userID})}" style="color: blue;">Details</a></td>
-                    <td><a href="#" th:href="@{/editUser(id=${user.userID})}" style="color: orange;">Edit</a></td>
+                    <td><a href="#" th:href="@{/userDetail(id=${user.userID})}" style="color: #18ABDD;">Details</a></td>
+                    <td><a href="#" th:href="@{/editUser(id=${user.userID})}" style="color: #FF9B26;">Edit</a></td>
                     <td>
                         <!-- Add a delete confirmation modal -->
                         <a href="#"  th:data-user-id="${user.userID}"
-                           data-toggle="modal" data-target="#deleteModal" style="color: red;">Delete</a>
+                           data-toggle="modal" data-target="#deleteModal" style="color: #db303b;">Delete</a>
                     </td>
                 </tr>
                 </tbody>
@@ -179,6 +191,32 @@
         });
     });
 </script>
+<script>
+    // Wait for the DOM to be ready
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.getElementById("userSearch");
+        const usersTable = document.getElementById("usersTable");
+
+        searchInput.addEventListener("input", function () {
+            const searchTerm = searchInput.value.toLowerCase();
+
+            // Loop through each row in the users table
+            for (const row of usersTable.querySelectorAll("tbody tr")) {
+                const userNameCell = row.querySelector(".user-name");
+                if (userNameCell) {
+                    const userName = userNameCell.textContent.toLowerCase();
+                    // Show/hide rows based on the search term
+                    if (userName.includes(searchTerm)) {
+                        row.style.display = "table-row";
+                    } else {
+                        row.style.display = "none";
+                    }
+                }
+            }
+        });
+    });
+</script>
+
 
 </body>
 </html>
