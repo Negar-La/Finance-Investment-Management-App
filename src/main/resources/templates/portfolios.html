@@ -60,7 +60,7 @@
             <form action="addPortfolio" method="POST">
                 <div class="form-group row">
                     <label for="accountID" class="col-3 col-form-label">
-                        <strong> Enter Account ID:</strong></label>
+                        <strong> Account ID:</strong></label>
                     <div class="col-9">
                         <input type="number" name="accountID"
                                id="accountID" class="form-control" required/>
@@ -119,8 +119,8 @@
                     <td><a href="#" th:href="@{/editPortfolio(id=${portfolio.portfolioID})}" style="color: #FF9B26;">Edit</a></td>
                     <td>
                         <!-- Add a delete confirmation modal -->
-                        <a href="#" th:data-portfolio-id="${portfolio.portfolioID}"
-                           data-toggle="modal" data-target="#deleteModal" style="color: #db303b;">Delete</a>
+                        <a href="#" class="btn btn-danger btn-sm" th:data-portfolio-id="${portfolio.portfolioID}"
+                           data-toggle="modal" data-target="#deleteModal" style="color: #db303b; background-color: transparent; border:none;">Delete</a>
                     </td>
                 </tr>
                 </tbody>

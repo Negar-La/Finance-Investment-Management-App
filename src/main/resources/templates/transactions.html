@@ -160,8 +160,8 @@
                     <td><a href="#" th:href="@{/editTransaction(id=${transaction.transactionID})}"  style="color: #FF9B26;">Edit</a></td>
                     <td>
                         <!-- Add a delete confirmation modal -->
-                        <a href="#" th:data-transaction-id="${transaction.transactionID}"
-                           data-toggle="modal" data-target="#deleteModal" style="color: #db303b;">Delete</a>
+                        <a href="#" class="btn btn-danger btn-sm" th:data-transaction-id="${transaction.transactionID}"
+                           data-toggle="modal" data-target="#deleteModal" style="color: #db303b; background-color: transparent; border:none;">Delete</a>
                     </td>
                 </tr>
                 </tbody>
