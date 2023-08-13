@@ -103,11 +103,18 @@
         </div>
     </div>
 
-    <div class="form-group row m-4 border border-dark add-user text-center">
-        <label for="userSearch" class="col-form-label col-3"> <strong>Search By Name: </strong></label>
-        <div class="col-6">
-            <input type="text" id="userSearch" class="form-control"
-                   placeholder="Type user name..." />
+    <div class="form-group row m-4 border border-dark add-user search-section">
+        <div class="col-3 text-center m-3">
+            <span ></span>
+        </div>
+        <div class="col-8 text-center m-3">
+            <div class="form-group row">
+                <label for="userSearch" class="col-form-label col-3"> <strong>Search By Name: </strong></label>
+                <div class="col-8">
+                    <input type="text" id="userSearch" class="form-control"
+                           placeholder="Type user name..." />
+                </div>
+            </div>
         </div>
     </div>
 
@@ -136,8 +143,8 @@
                     <td><a href="#" th:href="@{/editUser(id=${user.userID})}" style="color: #FF9B26;">Edit</a></td>
                     <td>
                         <!-- Add a delete confirmation modal -->
-                        <a href="#"  th:data-user-id="${user.userID}"
-                           data-toggle="modal" data-target="#deleteModal" style="color: #db303b;">Delete</a>
+                        <a href="#" class="btn btn-danger btn-sm" th:data-user-id="${user.userID}"
+                           data-toggle="modal" data-target="#deleteModal" style="color: #db303b; background-color: transparent; border:none;">Delete</a>
                     </td>
                 </tr>
                 </tbody>
