@@ -9,7 +9,14 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="styles.css">
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+    </style>
     <title>Personal Finance and Investment Management Application</title>
 </head>
 <body>
@@ -53,7 +60,7 @@
             <form action="addPortfolio" method="POST">
                 <div class="form-group row">
                     <label for="accountID" class="col-3 col-form-label">
-                        Enter Account ID</label>
+                        <strong> Enter Account ID:</strong></label>
                     <div class="col-9">
                         <input type="number" name="accountID"
                                id="accountID" class="form-control" required/>
@@ -62,7 +69,7 @@
 
                 <div class="form-group row">
                     <label for="portfolioName" class="col-3 col-form-label">
-                        Portfolio Name</label>
+                        <strong> Portfolio Name:</strong></label>
                     <div class="col-9">
                         <input type="text" name="portfolioName"
                                id="portfolioName" class="form-control"/>
@@ -71,7 +78,7 @@
 
                 <div class="form-group row">
                     <label for="assets" class="col-3 col-form-label">
-                        Asssets</label>
+                        <strong> Asssets:</strong></label>
                     <div class="col-9">
                         <select multiple id="assets" name="id"
                                 class="form-control" >
@@ -108,12 +115,12 @@
                     <td th:text="${portfolio.portfolioID}">Portfolio ID</td>
                     <td th:text="${portfolio.portfolioName}">Portfolio Name</td>
                     <td th:text='${portfolio.accountID}'>Account ID</td>
-                    <td><a href="#" th:href="@{/portfolioDetail(id=${portfolio.portfolioID})}">Details</a></td>
-                    <td><a href="#" th:href="@{/editPortfolio(id=${portfolio.portfolioID})}">Edit</a></td>
+                    <td><a href="#" th:href="@{/portfolioDetail(id=${portfolio.portfolioID})}" style="color: blue;">Details</a></td>
+                    <td><a href="#" th:href="@{/editPortfolio(id=${portfolio.portfolioID})}" style="color: orange;">Edit</a></td>
                     <td>
                         <!-- Add a delete confirmation modal -->
-                        <a href="#" class="btn btn-danger btn-sm" th:data-portfolio-id="${portfolio.portfolioID}"
-                           data-toggle="modal" data-target="#deleteModal">Delete</a>
+                        <a href="#" th:data-portfolio-id="${portfolio.portfolioID}"
+                           data-toggle="modal" data-target="#deleteModal" style="color: red;">Delete</a>
                     </td>
                 </tr>
                 </tbody>
