@@ -23,7 +23,8 @@ Manage various types of assets, including stocks, bonds, real estate, and more. 
 Gain valuable insights into your financial portfolio and track transactions effectively. Explore detailed overviews of users' portfolios and their transaction history, presented as separate tables for enhanced clarity. Additionally, the application computes and displays the final balance, offering a comprehensive view of the financial status.
 
 ### Entity Relationship Diagram (ERD):
-![Project Screenshot](sql-pdf-img-files/ERD-image.jpg)
+
+<img src="sql-pdf-img-files/ERD-image.jpg" alt="Image Alt Text" width="800" height="auto">
 
 ## Technology Stack
 
