@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 @Service
 public class TransactionServiceImpl implements TransactionService {
@@ -50,6 +51,11 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public List<Transaction> getTransactionsByUserId(int userId) {
         return transactionDao.getTransactionsByUserId(userId);
+    }
+
+    @Override
+    public List<Transaction> getTransactionsByDate(LocalDate date) {
+        return transactionDao.getTransactionsByDate(date);
     }
 
     @Override

@@ -6,9 +6,11 @@ import Final.project.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
 import javax.validation.Valid;
 import javax.validation.Validation;
@@ -54,6 +56,38 @@ public class TransactionController {
         model.addAttribute("assets", assets);
         model.addAttribute("transactions", transactions);
         model.addAttribute("errors", violations);
+        return "transactions";
+    }
+
+    @GetMapping("transactionsByDate")
+    public String getTransactionsByDate(Model model, HttpServletRequest request,
+                                        @RequestParam(value = "searchDate", required = false) String searchDate) {
+        model.addAttribute("errors", violations);
+
+        LocalDate localDate = null; // Initialize localDate variable
+
+        if (searchDate != null && !searchDate.isEmpty()) {
+            localDate = LocalDate.parse(searchDate);
+        } else {
+            List<Transaction> transactions = transactionService.getAllTransactions();
+            model.addAttribute("transactions", transactions);
+            return "transactions";
+        }
+        if(violations.isEmpty()){
+            List<Transaction> transactions = transactionService.getTransactionsByDate(localDate);
+            model.addAttribute("transactions", transactions);
+
+            List<User> users = userService.getAllUsers();
+            List<Account> accounts = accountService.getAllAccounts();
+            List<Portfolio> portfolios = portfolioService.getAllPortfolios();
+            List<Asset> assets = assetService.getAllAssets();
+            model.addAttribute("users", users);
+            model.addAttribute("accounts", accounts);
+            model.addAttribute("portfolios", portfolios);
+            model.addAttribute("assets", assets);
+            model.addAttribute("searchDate", localDate);
+        }
+
         return "transactions";
     }
 
@@ -113,8 +147,8 @@ public class TransactionController {
     }
 
     @PostMapping("editTransaction")
-    public String performEditTransaction(@ModelAttribute("transaction") @Valid Transaction transaction,
-                                    @RequestParam("transactionDate") String transactionDate,
+    public String performEditTransaction(@ModelAttribute("transaction") @Valid Transaction transaction, BindingResult result,  Model model,
+                                         @RequestParam("transactionDate") String transactionDate,
                                     @RequestParam("amount") String amount,
                                     @RequestParam("transactionType") String transactionType,
                                     @RequestParam("description") String description,
@@ -137,6 +171,14 @@ public class TransactionController {
         // Set the Portfolio and Asset objects for the Transaction
         transaction.setPortfolio(portfolio);
         transaction.setAsset(asset);
+
+        if(result.hasErrors()) {
+            model.addAttribute("assets", assetService.getAllAssets());
+            model.addAttribute("portfolios", portfolioService.getAllPortfolios());
+            model.addAttribute("transaction", transaction);
+            return "editTransaction";
+        }
+
 
         // Perform validation using Bean Validation (JSR 380)
         Validator validator = Validation.buildDefaultValidatorFactory().getValidator();

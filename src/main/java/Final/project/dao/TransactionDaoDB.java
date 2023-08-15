@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -160,6 +161,20 @@ public class TransactionDaoDB implements TransactionDao{
         return transactions;
     }
 
+    @Override
+    public List<Transaction> getTransactionsByDate(LocalDate date) {
+        try {
+            final String sql = "SELECT * FROM transaction WHERE TransactionDate = ?";
+            List<Transaction> transactionList = jdbc.query(sql, new TransactionMapper(), date);
+            for (Transaction transaction:transactionList) {
+                insertPortfolio(transaction);
+                insertAsset(transaction);
+            }
+            return transactionList;
+        } catch (DataAccessException ex) {
+            return null;
+        }
+    }
 
     // Mapper class to convert the database result into a Transaction object
     public static final class TransactionMapper implements RowMapper<Transaction> {
