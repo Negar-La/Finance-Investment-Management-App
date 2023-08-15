@@ -3,6 +3,7 @@ package Final.project.service;
 import Final.project.dao.TransactionDao;
 import Final.project.entities.Transaction;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -54,6 +55,11 @@ public class TransactionDaoStubImpl implements TransactionDao {
     @Override
     public List<Transaction> getTransactionsByUserId(int userId) {
         return transactionsByUserId.getOrDefault(userId, new ArrayList<>());
+    }
+
+    @Override
+    public List<Transaction> getTransactionsByDate(LocalDate date) {
+        return null;
     }
 }
 

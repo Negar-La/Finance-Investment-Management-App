@@ -132,6 +132,29 @@
         </div>
     </div>
 
+    <div class="row m-4">
+        <div class="col text-center">
+            <!-- Add the filter options -->
+            <form action="transactionsByDate" method="GET">
+                <div class="form-group row">
+                    <label for="searchDate" class="col-form-label col-3"><strong> Search Transactions by Date: </strong></label>
+                    <div class="col-6">
+                        <input type="date" class="form-control" id="searchDate" name="searchDate"  th:value="${#request.getParameter('searchDate')}">
+                    </div>
+                    <!-- Add the search and reset buttons -->
+                    <div class="col-3">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                        <a href="transactions">
+                            <button type="button" class="btn btn-secondary">Reset</button>
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
     <div class="row m-4 border border-dark">
         <div class="col text-center m-3">
             <table class="table table-striped">

@@ -96,7 +96,7 @@ public class AssetController {
     }
 
     @PostMapping("editAsset")
-    public String performEditAsset(@Valid Asset asset, BindingResult result, HttpServletRequest request, Model model) {
+    public String performEditAsset(@Valid Asset asset, BindingResult result, Model model) {
 
         if(result.hasErrors()) {
             model.addAttribute("asset", asset);

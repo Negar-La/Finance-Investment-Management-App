@@ -3,6 +3,7 @@ package Final.project.service;
 import Final.project.entities.Transaction;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 public interface TransactionService {
@@ -15,6 +16,8 @@ public interface TransactionService {
 
     List<Transaction> getTransactionsByPortfolioId(int portfolioId);
     List<Transaction> getTransactionsByUserId(int userId);
+
+    List<Transaction> getTransactionsByDate(LocalDate date);
 
     BigDecimal getUserBalance(int userId) throws InsufficientFundsException;
 }
