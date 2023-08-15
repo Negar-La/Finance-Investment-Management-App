@@ -138,7 +138,7 @@ public class UserController {
     }
 
     @PostMapping("editUser")
-    public String performEditUser(@Valid User user, BindingResult result, HttpServletRequest request, Model model) {
+    public String performEditUser(@Valid User user, BindingResult result, Model model) {
         if(result.hasErrors()) {
             model.addAttribute("accounts", accountService.getAllAccounts());
                 model.addAttribute("user", user);
