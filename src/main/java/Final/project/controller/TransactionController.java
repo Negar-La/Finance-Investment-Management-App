@@ -16,7 +16,6 @@ import javax.validation.Validator;
 import java.beans.PropertyEditorSupport;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
@@ -114,7 +113,7 @@ public class TransactionController {
     }
 
     @PostMapping("editTransaction")
-    public String updateTransaction(@ModelAttribute("transaction") @Valid Transaction transaction,
+    public String performEditTransaction(@ModelAttribute("transaction") @Valid Transaction transaction,
                                     @RequestParam("transactionDate") String transactionDate,
                                     @RequestParam("amount") String amount,
                                     @RequestParam("transactionType") String transactionType,
