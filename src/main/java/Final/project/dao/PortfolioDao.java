@@ -13,5 +13,7 @@ public interface PortfolioDao {
     void deletePortfolioById(int id);
 
     List<Portfolio> getPortfoliosByUserId(int userId);
+
+    List<Portfolio> getPortfoliosByAccountId(int accountId);
     List<Asset> getAssetsForPortfolio(int portfolioId); // New method to get assets for a portfolio
 }

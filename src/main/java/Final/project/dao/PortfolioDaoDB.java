@@ -127,6 +127,17 @@ public class PortfolioDaoDB implements PortfolioDao{
     }
 
     @Override
+    public List<Portfolio> getPortfoliosByAccountId(int accountId) {
+        final String SELECT_PORTFOLIOS_BY_ACCOUNT_ID = "SELECT * FROM Portfolio WHERE AccountID = ?";
+        List<Portfolio> portfolios = jdbc.query(SELECT_PORTFOLIOS_BY_ACCOUNT_ID, new PortfolioMapper(), accountId);
+
+        for (Portfolio portfolio : portfolios) {
+            portfolio.setAssets(getAssetsForPortfolio(portfolio.getPortfolioID()));
+        }
+        return portfolios;
+    }
+
+    @Override
     public List<Asset> getAssetsForPortfolio(int portfolioId) {
         final String SELECT_ASSETS_FOR_PORTFOLIO = "SELECT Asset.* FROM Asset JOIN Portfolio_Asset ON Asset.AssetID = Portfolio_Asset.AssetID WHERE Portfolio_Asset.PortfolioID = ?";
         return jdbc.query(SELECT_ASSETS_FOR_PORTFOLIO, new AssetDaoDB.AssetMapper(), portfolioId);
