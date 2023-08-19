@@ -44,6 +44,11 @@ public class PortfolioServiceImpl implements PortfolioService {
     }
 
     @Override
+    public List<Portfolio> getPortfoliosByAccountId(int accountId) {
+        return portfolioDao.getPortfoliosByAccountId(accountId);
+    }
+
+    @Override
     public List<Asset> getAssetsForPortfolio(int portfolioId) {
         return portfolioDao.getAssetsForPortfolio(portfolioId);
     }

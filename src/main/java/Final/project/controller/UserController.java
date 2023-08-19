@@ -96,7 +96,7 @@ public class UserController {
 
                     // For each account, fetch portfolios and assets
                     for (Account account : user.getAccounts()) {
-                        portfolios = portfolioService.getPortfoliosByUserId(user.getUserID());
+                        portfolios = portfolioService.getPortfoliosByAccountId(account.getAccountID());
                         account.setPortfolios(portfolios);
                     }
                 }
