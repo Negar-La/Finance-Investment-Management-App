@@ -59,11 +59,16 @@
         <div class="col-7 text-center m-3">
             <form action="addPortfolio" method="POST">
                 <div class="form-group row">
-                    <label for="accountID" class="col-3 col-form-label">
-                        <strong> Account ID:</strong></label>
+                    <label for="account" class="col-3 col-form-label">
+                        <strong> Account Name:</strong></label>
                     <div class="col-9">
-                        <input type="number" name="accountID"
-                               id="accountID" class="form-control" required/>
+                        <select id="account" name="accountID" class="form-control">
+                            <option th:each="account : ${accounts}"
+                                    th:value="${account.accountID}"
+                                    th:text="${account.accountName}">
+                                Account Name
+                            </option>
+                        </select>
                     </div>
                 </div>
 
